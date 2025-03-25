@@ -26,15 +26,15 @@ class CustomTextField extends StatelessWidget {
     return Column(
       children: [
         Row(children: [Text(text, style: AppTextStyle.textFieldStyle)]),
-        SizedBox(height: 12.h),
+        SizedBox(height: 8.h),
         TextField(
           controller: controller,
           decoration:
               !hasIcon
                   ? InputDecoration(
                     contentPadding: EdgeInsets.symmetric(
-                      horizontal: 20,
-                      vertical: 15,
+                      horizontal: 15,
+                      vertical: 10,
                     ),
                     border: OutlineInputBorder(
                       borderSide: BorderSide(
@@ -51,13 +51,13 @@ class CustomTextField extends StatelessWidget {
                   )
                   : InputDecoration(
                     contentPadding: EdgeInsets.symmetric(
-                      horizontal: 20,
-                      vertical: 15,
+                      horizontal: 15,
+                      vertical: 10,
                     ),
                     suffixIcon: SvgPicture.asset(
                       iconPath,
-                      width: 12.w,
-                      height: 12.h,
+                      width: 24.w,
+                      height: 24.h,
                     ),
                     // contentPadding: EdgeInsets.fromLTRB(10, 0, 10, 0),
                     border: OutlineInputBorder(

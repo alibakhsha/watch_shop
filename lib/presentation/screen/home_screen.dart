@@ -12,7 +12,7 @@ class HomeScreen extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         backgroundColor: AppColor.bgColor,
-        appBar: buildCustomSignUpAppBar(),
+        // appBar: buildCustomSignUpAppBar(),
         body: Padding(
           padding:  EdgeInsets.only(top: 20.h,left: 24.w,right: 24.w),
           child: Column(

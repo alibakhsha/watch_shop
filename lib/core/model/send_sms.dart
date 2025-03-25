@@ -29,7 +29,7 @@ class SendSmsResponse {
 
 class SmsData {
   final String mobile;
-  final String code;
+  final int code;
 
   SmsData({required this.mobile, required this.code});
 
