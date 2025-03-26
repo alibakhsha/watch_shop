@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -17,6 +16,8 @@ import '../../../logic/state/register_state.dart';
 import '../../widgets/app_bar.dart';
 
 class RegisterSignUpScreen extends StatelessWidget {
+  const RegisterSignUpScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     final TextEditingController nameController = TextEditingController();

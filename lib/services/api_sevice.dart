@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import '../core/model/check_sms.dart';
@@ -30,15 +31,15 @@ class ApiService {
         '/public/api/v1/send_sms',
         data: formData,
       );
-      print('Response Status Code: ${response.statusCode}'); // نمایش کد وضعیت
-      print('Response Data: ${response.data}'); // نمایش محتوای دریافتی
+      debugPrint('Response Status Code: ${response.statusCode}');
+      debugPrint('Response Data: ${response.data}');
       if (response.statusCode == 200 || response.statusCode == 201) {
         return SendSmsResponse.fromJson(response.data);
       } else {
         throw Exception('Failed to send SMS');
       }
     } catch (e) {
-      print('Error in sendSms: $e');
+      debugPrint('Error in sendSms: $e');
       rethrow;
     }
   }
@@ -52,8 +53,8 @@ class ApiService {
         data: formData,
       );
 
-      print('Response Status Code: ${response.statusCode}');
-      print('Response Data: ${response.data}');
+      debugPrint('Response Status Code: ${response.statusCode}');
+      debugPrint('Response Data: ${response.data}');
 
 
       if (response.statusCode == 200 || response.statusCode == 201) {
@@ -62,7 +63,7 @@ class ApiService {
         throw Exception('Failed to verify SMS code');
       }
     } catch (e) {
-      print('Error in checkSmsCode: $e');
+      debugPrint('Error in checkSmsCode: $e');
       rethrow;
     }
   }
@@ -105,9 +106,9 @@ class ApiService {
         data: formData,
       );
 
-      print('Response Status Code: ${response.statusCode}');
-      print('Response Data: ${response.data}');
-      print('User Data: ${response.data['data']['user']}');
+      debugPrint('Response Status Code: ${response.statusCode}');
+      debugPrint('Response Data: ${response.data}');
+      debugPrint('User Data: ${response.data['data']['user']}');
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         return RegisterUserResponse.fromJson(response.data);
@@ -115,7 +116,32 @@ class ApiService {
         throw Exception('Failed to register user');
       }
     } catch (e) {
-      print('Error in registerUser: $e');
+      debugPrint('Error in registerUser: $e');
+      rethrow;
+    }
+  }
+
+  Future<Map<String, dynamic>> getHomeData() async {
+    try {
+      final response = await dio.get(
+        '/public/api/v1/home',
+        options: Options(
+          headers: {
+            'accept': 'application/json',
+            'X-CSRF-TOKEN': '',
+          },
+        ),
+      );
+
+      debugPrint('Home Data Response: ${response.data}');
+
+      if (response.statusCode == 200) {
+        return response.data;
+      } else {
+        throw Exception('Failed to load home data');
+      }
+    } catch (e) {
+      debugPrint('Error in getHomeData: $e');
       rethrow;
     }
   }

@@ -8,6 +8,8 @@ import '../../logic/state/image_picker_state.dart';
 import '../../../gen/assets.gen.dart';
 
 class CustomProfile extends StatelessWidget {
+  const CustomProfile({super.key});
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ImagePickerBloc, ImagePickerState>(

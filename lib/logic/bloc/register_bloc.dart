@@ -22,14 +22,6 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
     try {
       emit(RegisterLoading());
 
-      print('name: ${event.name}');
-      print('phone: ${event.phone}');
-      print('address: ${event.address}');
-      print('postal_code: ${event.postalCode}');
-      print('lat: ${event.lat}');
-      print('lng: ${event.lng}');
-      print('imagePaths: ${event.imagePaths}');
-
       final request = RegisterUserRequest(
         name: event.name,
         phone: event.phone,

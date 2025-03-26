@@ -1,10 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:watch_shop/constant/app_color.dart';
-import 'package:watch_shop/core/route/route.dart';
 import 'package:watch_shop/core/route/route_name.dart';
 import 'package:watch_shop/gen/assets.gen.dart';
 import 'package:watch_shop/logic/bloc/auth_bloc.dart';
@@ -17,6 +15,8 @@ import '../../../logic/state/auth_state.dart';
 
 class RegisterIntroScreen extends StatelessWidget {
   final TextEditingController phoneController = TextEditingController();
+
+  RegisterIntroScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

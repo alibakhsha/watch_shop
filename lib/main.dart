@@ -3,9 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:watch_shop/core/route/route.dart';
+import 'package:watch_shop/logic/bloc/home_bloc.dart';
 import 'package:watch_shop/logic/bloc/image_picker_bloc.dart';
-import 'package:watch_shop/presentation/screen/home_screen.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:watch_shop/services/api_sevice.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -13,6 +14,8 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
@@ -38,7 +41,10 @@ class MyApp extends StatelessWidget {
             }
 
             return MultiBlocProvider(
-              providers: [BlocProvider(create: (_) => ImagePickerBloc())],
+              providers: [
+                BlocProvider(create: (_) => ImagePickerBloc()),
+                BlocProvider(create: (_) => HomeBloc(ApiService())),
+              ],
               child: MaterialApp.router(
                 debugShowCheckedModeBanner: false,
                 locale: const Locale('fa'),

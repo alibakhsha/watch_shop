@@ -1,4 +1,3 @@
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -9,6 +8,12 @@ class AppTextStyle {
     fontFamily: "Dana",
     fontSize: 13.w,
     fontWeight: FontWeight.w700,
+    color: Colors.black
+  );
+  static var categoryTitleStyle = TextStyle(
+    fontFamily: "Dana",
+    fontSize: 11.w,
+    fontWeight: FontWeight.w400,
     color: Colors.black
   );
   static var textAppBarStyle = TextStyle(
