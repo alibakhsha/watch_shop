@@ -10,7 +10,7 @@ import 'package:watch_shop/presentation/screen/register/register_verify_screen.d
 Future<String> getInitialRoute() async {
   final secureStorage = FlutterSecureStorage();
   final token = await secureStorage.read(key: 'token');
-  return token != null ? RouteName.registerSignUp : RouteName.registerIntro;
+  return token != null ? RouteName.home : RouteName.registerIntro;
 }
 
 final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>(

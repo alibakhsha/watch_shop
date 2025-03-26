@@ -54,11 +54,7 @@ class CustomTextField extends StatelessWidget {
                       horizontal: 15,
                       vertical: 10,
                     ),
-                    suffixIcon: SvgPicture.asset(
-                      iconPath,
-                      width: 24.w,
-                      height: 24.h,
-                    ),
+                    suffixIcon: Icon(Icons.location_on_outlined,color: Colors.black,size: 24,),
                     // contentPadding: EdgeInsets.fromLTRB(10, 0, 10, 0),
                     border: OutlineInputBorder(
                       borderSide: BorderSide(

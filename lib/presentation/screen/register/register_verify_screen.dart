@@ -68,13 +68,11 @@ class RegisterVerifyScreen extends StatelessWidget {
                   BlocConsumer<AuthBloc, AuthState>(
                     listener: (context, state) {
                       if (state is SmsCodeVerified) {
-                        // موفقیت آمیز بودن عملیات
                         GoRouter.of(
                           context,
-                        ).pushNamed('/registerSignUp'); // صفحه بعدی
+                        ).pushNamed('/registerSignUp');
                       }
                       if (state is AuthFailure) {
-                        // خطا در تایید کد
                         ScaffoldMessenger.of(
                           context,
                         ).showSnackBar(SnackBar(content: Text(state.error)));
