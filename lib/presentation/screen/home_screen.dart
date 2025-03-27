@@ -4,12 +4,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:watch_shop/constant/app_color.dart';
 import 'package:watch_shop/constant/app_text_style.dart';
 import 'package:watch_shop/logic/state/home_state.dart';
+import 'package:watch_shop/presentation/widgets/product_card.dart';
+import 'package:watch_shop/presentation/widgets/rotated_text.dart';
 
 import '../../gen/assets.gen.dart';
 import '../../logic/bloc/home_bloc.dart';
 import '../../logic/event/home_event.dart';
 import '../widgets/home_screen_banner.dart';
-import '../widgets/text_fields.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -29,7 +30,17 @@ class HomeScreen extends StatelessWidget {
                 SizedBox(height: 24.h),
                 HomeScreenBanner(),
                 SizedBox(height: 24.h),
-                _buildCategoryItems()
+                _buildCategoryItems(),
+                SizedBox(height: 24.h),
+                _buildAmazingProductSection(),
+                SizedBox(height: 24.h),
+
+                _buildBanner(),
+                SizedBox(height: 24.h),
+                _buildMostSellerProductsSection(),
+                SizedBox(height: 24.h),
+                _buildNewestProductsSection(),
+                SizedBox(height: 24.h),
               ],
             ),
           ),
@@ -38,7 +49,7 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildSearchSection(){
+  Widget _buildSearchSection() {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(50)),
@@ -96,7 +107,11 @@ class HomeScreen extends StatelessWidget {
                       width: 74.w,
                       height: 74.h,
                       decoration: BoxDecoration(
-                        color: Colors.grey.withAlpha(20),
+                        gradient: LinearGradient(
+                          colors: [Color.fromRGBO(239, 239, 239, 1), Colors.white],
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                        ),
                         borderRadius: BorderRadius.all(Radius.circular(10)),
                         image: DecorationImage(image: NetworkImage(images[i])),
                       ),
@@ -106,6 +121,105 @@ class HomeScreen extends StatelessWidget {
                   ],
                 ),
             ],
+          );
+        }
+        return SizedBox();
+      },
+    );
+  }
+
+  Widget _buildAmazingProductSection() {
+    return BlocBuilder<HomeBloc, HomeState>(
+      builder: (context, state) {
+        if (state is HomeLoaded) {
+          final product = state.amazingProducts;
+          return SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: [
+                RotatedText(title: "شگفت انگیز",textColor: AppColor.textRotateAmazingColor,),
+                SizedBox(width: 20.w),
+                Wrap(
+                  spacing: 20.w,
+                  children:
+                      product
+                          .map((product) => ProductCard(productModel: product))
+                          .toList(),
+                ),
+              ],
+            ),
+          );
+        }
+        return SizedBox();
+      },
+    );
+  }
+
+  Widget _buildBanner() {
+    return BlocBuilder<HomeBloc, HomeState>(
+      builder: (context, state) {
+        if (state is HomeLoaded) {
+          return Container(
+            width: double.infinity,
+            height: 200.h,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(12)),
+              image: DecorationImage(image: AssetImage(Assets.png.banner.path)),
+            ),
+          );
+        }
+        return SizedBox();
+      },
+    );
+  }
+
+  Widget _buildMostSellerProductsSection() {
+    return BlocBuilder<HomeBloc, HomeState>(
+      builder: (context, state) {
+        if (state is HomeLoaded) {
+          final product = state.mostSellerProducts;
+          return SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: [
+                RotatedText(title: "پرفروش ها",textColor: AppColor.textRotateMostSellerColor),
+                SizedBox(width: 20.w),
+                Wrap(
+                  spacing: 20.w,
+                  children:
+                      product
+                          .map((product) => ProductCard(productModel: product))
+                          .toList(),
+                ),
+              ],
+            ),
+          );
+        }
+        return SizedBox();
+      },
+    );
+  }
+
+  Widget _buildNewestProductsSection() {
+    return BlocBuilder<HomeBloc, HomeState>(
+      builder: (context, state) {
+        if (state is HomeLoaded) {
+          final product = state.newestProducts;
+          return SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: [
+                RotatedText(title: "جدیدترین",textColor: AppColor.textRotateNewestColor),
+                SizedBox(width: 20.w),
+                Wrap(
+                  spacing: 20.w,
+                  children:
+                      product
+                          .map((product) => ProductCard(productModel: product))
+                          .toList(),
+                ),
+              ],
+            ),
           );
         }
         return SizedBox();

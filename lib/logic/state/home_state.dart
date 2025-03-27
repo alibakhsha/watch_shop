@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 
 import '../../core/model/home_page.dart';
+import '../../core/model/product_model.dart';
 
 abstract class HomeState extends Equatable {
   @override

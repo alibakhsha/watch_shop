@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="78" height="144" viewBox="0 0 78 144">
+  <g id="Group_364" data-name="Group 364" transform="translate(-659 -12)">
+    <text id="_شگفت_انگیز" data-name=" شگفت انگیز" transform="translate(698 156) rotate(-90)" fill="#391850" font-size="26" font-family="SegoeUI, Segoe UI"><tspan x="0" y="28"> </tspan><tspan y="28">شگفت انگیز</tspan></text>
+    <g id="Group_62" data-name="Group 62" transform="translate(288.48 179) rotate(-90)">
+      <text id="مشاهده_همه" data-name="مشاهده همه" transform="translate(60 381.52)" font-size="12" font-family="Dana-Regular, Dana"><tspan x="0" y="0">مشاهده همه</tspan></text>
+      <g id="vuesax_linear_direct-left" data-name="vuesax/linear/direct-left" transform="translate(56 371.52) rotate(90)">
+        <g id="direct-left">
+          <path id="Vector" d="M1.045,4.047,8.128.24A1.974,1.974,0,0,1,10.787,2.9L9.8,4.921a2.034,2.034,0,0,0,0,1.785l.99,2.022a1.975,1.975,0,0,1-2.659,2.659L1.045,7.579A2.015,2.015,0,0,1,1.045,4.047Z" transform="translate(3 2.686)" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+          <path id="Vector-2" data-name="Vector" d="M0,0H17V17H0Z" transform="translate(17 17) rotate(180)" fill="none" opacity="0"/>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

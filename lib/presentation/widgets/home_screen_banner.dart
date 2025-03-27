@@ -1,14 +1,13 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:watch_shop/gen/assets.gen.dart';
 
 import '../../logic/bloc/home_bloc.dart';
-import '../../logic/event/home_event.dart';
 import '../../logic/state/home_state.dart';
 
 class HomeScreenBanner extends StatefulWidget {
+  const HomeScreenBanner({super.key});
+
   @override
   State<HomeScreenBanner> createState() => _HomeScreenBannerState();
 }

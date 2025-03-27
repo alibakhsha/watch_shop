@@ -12,6 +12,12 @@ import 'package:flutter/widgets.dart';
 class $AssetsPngGen {
   const $AssetsPngGen();
 
+  /// File path: assets/png/amazing.png
+  AssetGenImage get amazing => const AssetGenImage('assets/png/amazing.png');
+
+  /// File path: assets/png/banner.png
+  AssetGenImage get banner => const AssetGenImage('assets/png/banner.png');
+
   /// File path: assets/png/user.png
   AssetGenImage get user => const AssetGenImage('assets/png/user.png');
 
@@ -19,7 +25,7 @@ class $AssetsPngGen {
   AssetGenImage get watch => const AssetGenImage('assets/png/watch.png');
 
   /// List of all assets
-  List<AssetGenImage> get values => [user, watch];
+  List<AssetGenImage> get values => [amazing, banner, user, watch];
 }
 
 class $AssetsSvgGen {
@@ -51,6 +57,9 @@ class $AssetsSvgGen {
 
   /// File path: assets/svg/Vector.svg
   String get vector => 'assets/svg/Vector.svg';
+
+  /// File path: assets/svg/amazing.svg
+  String get amazing => 'assets/svg/amazing.svg';
 
   /// File path: assets/svg/cart.svg
   String get cart => 'assets/svg/cart.svg';
@@ -102,6 +111,7 @@ class $AssetsSvgGen {
     group256,
     group257,
     vector,
+    amazing,
     cart,
     cart1,
     delete,
