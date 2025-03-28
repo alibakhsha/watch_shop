@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:go_router/go_router.dart';
 import 'package:watch_shop/core/route/route.dart';
 import 'package:watch_shop/logic/bloc/home_bloc.dart';
 import 'package:watch_shop/logic/bloc/image_picker_bloc.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:watch_shop/services/api_sevice.dart';
+
+import 'core/config/app_localization.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -20,46 +20,15 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ScreenUtilInit(
       designSize: const Size(428, 858),
-      builder: (context, child) {
-        return FutureBuilder<GoRouter>(
-          future: initGoRouter(),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const MaterialApp(
-                home: Scaffold(
-                  body: Center(child: CircularProgressIndicator()),
-                ),
-              );
-            }
-
-            if (snapshot.hasError) {
-              return MaterialApp(
-                home: Scaffold(
-                  body: Center(child: Text('خطا در مقداردهی مسیرها')),
-                ),
-              );
-            }
-
-            return MultiBlocProvider(
-              providers: [
-                BlocProvider(create: (_) => ImagePickerBloc()),
-                BlocProvider(create: (_) => HomeBloc(ApiService())),
-              ],
-              child: MaterialApp.router(
-                debugShowCheckedModeBanner: false,
-                locale: const Locale('fa'),
-                supportedLocales: const [Locale('fa', '')],
-                localizationsDelegates: const [
-                  GlobalMaterialLocalizations.delegate,
-                  GlobalWidgetsLocalizations.delegate,
-                  GlobalCupertinoLocalizations.delegate,
-                ],
-                routerConfig: snapshot.data!,
-              ),
-            );
-          },
-        );
-      },
+      builder: (context, child) => MultiBlocProvider(
+        providers: [
+          BlocProvider(create: (_) => ImagePickerBloc()),
+          BlocProvider(create: (_) => HomeBloc(ApiService())),
+        ],
+        child: AppLocalization.configureLocalizationWithRouter(
+          routerConfig: appRouter,
+        ),
+      ),
     );
   }
 }

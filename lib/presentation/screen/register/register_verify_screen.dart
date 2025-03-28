@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:watch_shop/constant/app_color.dart';
 import 'package:watch_shop/constant/app_text_style.dart';
+import 'package:watch_shop/core/route/route_name.dart';
 import 'package:watch_shop/presentation/widgets/custom_button.dart';
 import 'package:watch_shop/presentation/widgets/text_fields.dart';
 import 'package:watch_shop/services/api_sevice.dart';
@@ -67,7 +68,9 @@ class RegisterVerifyScreen extends StatelessWidget {
                   BlocConsumer<AuthBloc, AuthState>(
                     listener: (context, state) {
                       if (state is SmsCodeVerified) {
-                        GoRouter.of(context).pushNamed('/registerSignUp');
+                        GoRouter.of(
+                          context,
+                        ).pushReplacement(RouteName.registerSignUp);
                       }
                       if (state is AuthFailure) {
                         ScaffoldMessenger.of(

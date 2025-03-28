@@ -67,7 +67,7 @@ class RegisterIntroScreen extends StatelessWidget {
                     },
                     listener: (context, state) {
                       if (state is AuthSuccess) {
-                        GoRouter.of(context).push(
+                        GoRouter.of(context).pushReplacement(
                           RouteName.registerVerify,
                           extra: phoneController.text,
                         );

@@ -1,11 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-
-import '../core/model/check_sms.dart';
-import '../core/model/send_sms.dart';
-
-import '../core/model/user_data.dart';
 
 class ApiService {
   final Dio dio = Dio();
@@ -28,10 +22,7 @@ class ApiService {
   }
 
   Future<Response> get(String path, {Map<String, dynamic>? headers}) async {
-    return await dio.get(
-      path,
-      options: Options(headers: headers),
-    );
+    return await dio.get(path, options: Options(headers: headers));
   }
 
   // Future<Map<String, dynamic>> getHomeData() async {

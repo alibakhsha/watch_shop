@@ -28,7 +28,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         final sendSmsResponse = SendSmsResponse.fromJson(response.data);
-        emit(AuthSuccess(message: sendSmsResponse.message ?? 'SMS sent successfully'));
+        emit(AuthSuccess(message: sendSmsResponse.message));
       } else {
         emit(AuthFailure(error: 'Failed to send SMS: ${response.statusCode}'));
       }
@@ -51,11 +51,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         final checkSmsResponse = CheckSmsCodeResponse.fromJson(response.data);
-        final token = checkSmsResponse.data.token ?? '';
+        final token = checkSmsResponse.data.token;
         // ذخیره توکن توی secureStorage
         await secureStorage.write(key: 'token', value: token);
         emit(SmsCodeVerified(
-          message: checkSmsResponse.message ?? 'Code verified successfully',
+          message: checkSmsResponse.message,
           token: token,
         ));
       } else {
