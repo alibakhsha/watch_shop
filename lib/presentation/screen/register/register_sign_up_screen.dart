@@ -26,7 +26,7 @@ class RegisterSignUpScreen extends StatelessWidget {
     final TextEditingController postalCodeController = TextEditingController();
 
     return BlocProvider(
-      create: (context) => RegisterBloc(apiService: ApiService()),
+      create: (context) => RegisterBloc(ApiService()),
       child: SafeArea(
         child: Scaffold(
           backgroundColor: AppColor.bgColor,

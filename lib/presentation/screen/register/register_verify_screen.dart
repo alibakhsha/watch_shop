@@ -22,7 +22,7 @@ class RegisterVerifyScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     TextEditingController codeController = TextEditingController();
     return BlocProvider(
-      create: (context) => AuthBloc(apiService: ApiService()),
+      create: (context) => AuthBloc(ApiService()),
       child: SafeArea(
         child: Scaffold(
           backgroundColor: AppColor.bgColor,
@@ -67,9 +67,7 @@ class RegisterVerifyScreen extends StatelessWidget {
                   BlocConsumer<AuthBloc, AuthState>(
                     listener: (context, state) {
                       if (state is SmsCodeVerified) {
-                        GoRouter.of(
-                          context,
-                        ).pushNamed('/registerSignUp');
+                        GoRouter.of(context).pushNamed('/registerSignUp');
                       }
                       if (state is AuthFailure) {
                         ScaffoldMessenger.of(
@@ -82,10 +80,7 @@ class RegisterVerifyScreen extends StatelessWidget {
                         text: "ادامه",
                         onPressed: () {
                           context.read<AuthBloc>().add(
-                            CheckSmsCodeEvent(
-                              mobile: mobile,
-                              code: codeController.text,
-                            ),
+                            CheckSmsCodeEvent(mobile, codeController.text),
                           );
                         },
                         shape: ButtonShape.rectangle,

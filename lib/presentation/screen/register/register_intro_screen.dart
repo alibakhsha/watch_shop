@@ -21,7 +21,7 @@ class RegisterIntroScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => AuthBloc(apiService: ApiService()),
+      create: (context) => AuthBloc(ApiService()),
       child: SafeArea(
         child: Scaffold(
           backgroundColor: AppColor.bgColor,
@@ -58,7 +58,7 @@ class RegisterIntroScreen extends StatelessWidget {
                         onPressed: () {
                           String mobile = phoneController.text;
                           context.read<AuthBloc>().add(
-                            SendOtpEvent(mobile: mobile),
+                            SendSmsEvent(mobile),
                           );
                         },
                         shape: ButtonShape.rectangle,
@@ -67,9 +67,10 @@ class RegisterIntroScreen extends StatelessWidget {
                     },
                     listener: (context, state) {
                       if (state is AuthSuccess) {
-                        GoRouter.of(
-                          context,
-                        ).push(RouteName.registerVerify, extra: phoneController.text);
+                        GoRouter.of(context).push(
+                          RouteName.registerVerify,
+                          extra: phoneController.text,
+                        );
                       } else if (state is AuthFailure) {
                         ScaffoldMessenger.of(
                           context,
