@@ -75,4 +75,14 @@ class AppTextStyle {
     fontSize: 12.w,
     color: Colors.black,
   );
+  static var textBottomNavStyle1 = TextStyle(
+    fontFamily: "Dana",
+    fontSize: 12.w,
+    color: Colors.black,
+  );
+  static var textBottomNavStyle2 = TextStyle(
+    fontFamily: "Dana",
+    fontSize: 12.w,
+    color: Color.fromRGBO(196, 196, 196, 1),
+  );
 }

@@ -10,6 +10,7 @@ import 'package:watch_shop/presentation/widgets/rotated_text.dart';
 import '../../gen/assets.gen.dart';
 import '../../logic/bloc/home_bloc.dart';
 import '../../logic/event/home_event.dart';
+import '../widgets/bottom_navigation.dart';
 import '../widgets/home_screen_banner.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -18,32 +19,27 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     BlocProvider.of<HomeBloc>(context).add(FetchHomeData());
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: AppColor.bgColor,
-        body: Padding(
-          padding: EdgeInsets.only(top: 20.h, left: 24.w, right: 24.w),
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                _buildSearchSection(),
-                SizedBox(height: 24.h),
-                HomeScreenBanner(),
-                SizedBox(height: 24.h),
-                _buildCategoryItems(),
-                SizedBox(height: 24.h),
-                _buildAmazingProductSection(),
-                SizedBox(height: 24.h),
+    return Padding(
+      padding: EdgeInsets.only(top: 20.h, left: 24.w, right: 24.w),
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            _buildSearchSection(),
+            SizedBox(height: 24.h),
+            HomeScreenBanner(),
+            SizedBox(height: 24.h),
+            _buildCategoryItems(),
+            SizedBox(height: 24.h),
+            _buildAmazingProductSection(),
+            SizedBox(height: 24.h),
 
-                _buildBanner(),
-                SizedBox(height: 24.h),
-                _buildMostSellerProductsSection(),
-                SizedBox(height: 24.h),
-                _buildNewestProductsSection(),
-                SizedBox(height: 24.h),
-              ],
-            ),
-          ),
+            _buildBanner(),
+            SizedBox(height: 24.h),
+            _buildMostSellerProductsSection(),
+            SizedBox(height: 24.h),
+            _buildNewestProductsSection(),
+            SizedBox(height: 24.h),
+          ],
         ),
       ),
     );
@@ -108,7 +104,10 @@ class HomeScreen extends StatelessWidget {
                       height: 74.h,
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
-                          colors: [Color.fromRGBO(239, 239, 239, 1), Colors.white],
+                          colors: [
+                            Color.fromRGBO(239, 239, 239, 1),
+                            Colors.white,
+                          ],
                           begin: Alignment.topCenter,
                           end: Alignment.bottomCenter,
                         ),
@@ -137,7 +136,10 @@ class HomeScreen extends StatelessWidget {
             scrollDirection: Axis.horizontal,
             child: Row(
               children: [
-                RotatedText(title: "شگفت انگیز",textColor: AppColor.textRotateAmazingColor,),
+                RotatedText(
+                  title: "شگفت انگیز",
+                  textColor: AppColor.textRotateAmazingColor,
+                ),
                 SizedBox(width: 20.w),
                 Wrap(
                   spacing: 20.w,
@@ -182,7 +184,10 @@ class HomeScreen extends StatelessWidget {
             scrollDirection: Axis.horizontal,
             child: Row(
               children: [
-                RotatedText(title: "پرفروش ها",textColor: AppColor.textRotateMostSellerColor),
+                RotatedText(
+                  title: "پرفروش ها",
+                  textColor: AppColor.textRotateMostSellerColor,
+                ),
                 SizedBox(width: 20.w),
                 Wrap(
                   spacing: 20.w,
@@ -209,7 +214,10 @@ class HomeScreen extends StatelessWidget {
             scrollDirection: Axis.horizontal,
             child: Row(
               children: [
-                RotatedText(title: "جدیدترین",textColor: AppColor.textRotateNewestColor),
+                RotatedText(
+                  title: "جدیدترین",
+                  textColor: AppColor.textRotateNewestColor,
+                ),
                 SizedBox(width: 20.w),
                 Wrap(
                   spacing: 20.w,
