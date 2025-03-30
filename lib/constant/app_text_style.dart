@@ -11,31 +11,31 @@ class AppTextStyle {
   );
   static var productTitleStyle = TextStyle(
     fontFamily: "Dana",
-    fontSize: 12.w,
+    fontSize: 11.w,
     fontWeight: FontWeight.w400,
     color: Colors.black,
   );
   static var productPriceStyle = TextStyle(
     fontFamily: "Dana",
-    fontSize: 11.w,
+    fontSize: 10.w,
     fontWeight: FontWeight.w400,
     color: Colors.black,
   );
   static var productDiscountStyle = TextStyle(
     fontFamily: "Dana",
-    fontSize: 11.w,
+    fontSize: 10.w,
     fontWeight: FontWeight.w400,
     color: Colors.white,
   );
   static var productDiscountPriceStyle = TextStyle(
     fontFamily: "Dana",
-    fontSize: 11.w,
+    fontSize: 10.w,
     fontWeight: FontWeight.w400,
     color: AppColor.productDiscountPriceColor,
   );
   static var productDiscountTimeStyle = TextStyle(
     fontFamily: "Dana",
-    fontSize: 13.w,
+    fontSize: 12.w,
     fontWeight: FontWeight.w400,
     color: AppColor.productTimePriceColor,
   );
@@ -64,6 +64,11 @@ class AppTextStyle {
     fontFamily: "Dana",
     fontSize: 12.w,
     color: AppColor.bgButtonColor,
+  );
+  static var textAppBarProductStyle = TextStyle(
+    fontFamily: "Dana",
+    fontSize: 12.w,
+    color: Colors.black,
   );
   static var textRotateStyle = TextStyle(
     fontFamily: "Dana",

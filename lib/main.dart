@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:watch_shop/core/route/route.dart';
 import 'package:watch_shop/logic/bloc/home_bloc.dart';
 import 'package:watch_shop/logic/bloc/image_picker_bloc.dart';
+import 'package:watch_shop/logic/bloc/product_bloc.dart';
 import 'package:watch_shop/services/api_sevice.dart';
 
 import 'core/config/app_localization.dart';
@@ -24,6 +25,7 @@ class MyApp extends StatelessWidget {
         providers: [
           BlocProvider(create: (_) => ImagePickerBloc()),
           BlocProvider(create: (_) => HomeBloc(ApiService())),
+          BlocProvider(create: (_) => ProductBloc(ApiService())),
         ],
         child: AppLocalization.configureLocalizationWithRouter(
           routerConfig: appRouter,

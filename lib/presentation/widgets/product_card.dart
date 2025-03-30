@@ -15,7 +15,7 @@ class ProductCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 202.w,
+      width: 182.w,
       height: 320.h,
       decoration: BoxDecoration(
         gradient: LinearGradient(
@@ -136,7 +136,7 @@ class ProductCard extends StatelessWidget {
             ),
           ],
         ),
-        SizedBox(height: 8.h),
+        SizedBox(height: 4.h),
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: Divider(height: 5, color: AppColor.productTimePriceColor),
@@ -146,6 +146,8 @@ class ProductCard extends StatelessWidget {
           productModel.specialExpiration.toString(),
           style: AppTextStyle.productDiscountTimeStyle,
           textAlign: TextAlign.center,
+          overflow: TextOverflow.clip,
+          maxLines: 1,
         ),
       ],
     );

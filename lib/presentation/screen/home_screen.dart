@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:watch_shop/constant/app_color.dart';
 import 'package:watch_shop/constant/app_text_style.dart';
 import 'package:watch_shop/logic/state/home_state.dart';
@@ -10,7 +11,6 @@ import 'package:watch_shop/presentation/widgets/rotated_text.dart';
 import '../../gen/assets.gen.dart';
 import '../../logic/bloc/home_bloc.dart';
 import '../../logic/event/home_event.dart';
-import '../widgets/bottom_navigation.dart';
 import '../widgets/home_screen_banner.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -97,27 +97,32 @@ class HomeScreen extends StatelessWidget {
             runSpacing: 10.h,
             children: [
               for (var i = 0; i < state.categories.length; i++)
-                Column(
-                  children: [
-                    Container(
-                      width: 74.w,
-                      height: 74.h,
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          colors: [
-                            Color.fromRGBO(239, 239, 239, 1),
-                            Colors.white,
-                          ],
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
+                GestureDetector(
+                  onTap: (){
+                    context.push("/products/${i+1}");
+                  },
+                  child: Column(
+                    children: [
+                      Container(
+                        width: 74.w,
+                        height: 74.h,
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: [
+                              Color.fromRGBO(239, 239, 239, 1),
+                              Colors.white,
+                            ],
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                          ),
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                          image: DecorationImage(image: NetworkImage(images[i])),
                         ),
-                        borderRadius: BorderRadius.all(Radius.circular(10)),
-                        image: DecorationImage(image: NetworkImage(images[i])),
                       ),
-                    ),
-                    SizedBox(height: 8.h),
-                    Text(title[i], style: AppTextStyle.categoryTitleStyle),
-                  ],
+                      SizedBox(height: 8.h),
+                      Text(title[i], style: AppTextStyle.categoryTitleStyle),
+                    ],
+                  ),
                 ),
             ],
           );

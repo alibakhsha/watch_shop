@@ -1,16 +1,22 @@
 // route.dart
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart'; // برای CustomTransitionPage
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:go_router/go_router.dart';
 import 'package:watch_shop/core/route/route_name.dart';
 import 'package:watch_shop/presentation/screen/cart_screen.dart';
 import 'package:watch_shop/presentation/screen/home_screen.dart';
+import 'package:watch_shop/presentation/screen/products_screen.dart';
 import 'package:watch_shop/presentation/screen/profile_screen.dart';
 import 'package:watch_shop/presentation/screen/register/register_intro_screen.dart';
 import 'package:watch_shop/presentation/screen/register/register_sign_up_screen.dart';
 import 'package:watch_shop/presentation/screen/register/register_verify_screen.dart';
 import 'package:watch_shop/presentation/widgets/custom_shell_screen.dart';
+
+import '../../logic/bloc/product_bloc.dart';
+import '../../logic/event/product_event.dart';
+import '../../services/api_sevice.dart';
 
 final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>(
   debugLabel: 'root',
@@ -49,39 +55,53 @@ final GoRouter appRouter = GoRouter(
         GoRoute(
           path: '/home',
           name: RouteName.home,
-          pageBuilder: (context, state) => CustomTransitionPage(
-            key: state.pageKey,
-            child: const HomeScreen(),
-            transitionsBuilder: (context, animation, secondaryAnimation, child) => child, // بدون انیمیشن
-            transitionDuration: Duration.zero, // مدت زمان صفر
-          ),
+          pageBuilder:
+              (context, state) => CustomTransitionPage(
+                key: state.pageKey,
+                child: const HomeScreen(),
+                transitionsBuilder:
+                    (context, animation, secondaryAnimation, child) =>
+                        child, // بدون انیمیشن
+                transitionDuration: Duration.zero, // مدت زمان صفر
+              ),
         ),
         GoRoute(
           path: '/cart',
           name: RouteName.cart,
-          pageBuilder: (context, state) => CustomTransitionPage(
-            key: state.pageKey,
-            child:  CartScreen(),
-            transitionsBuilder: (context, animation, secondaryAnimation, child) => child,
-            transitionDuration: Duration.zero,
-          ),
+          pageBuilder:
+              (context, state) => CustomTransitionPage(
+                key: state.pageKey,
+                child: CartScreen(),
+                transitionsBuilder:
+                    (context, animation, secondaryAnimation, child) => child,
+                transitionDuration: Duration.zero,
+              ),
         ),
         GoRoute(
           path: '/profile',
           name: RouteName.profile,
-          pageBuilder: (context, state) => CustomTransitionPage(
-            key: state.pageKey,
-            child:  ProfileScreen(),
-            transitionsBuilder: (context, animation, secondaryAnimation, child) => child,
-            transitionDuration: Duration.zero,
-          ),
+          pageBuilder:
+              (context, state) => CustomTransitionPage(
+                key: state.pageKey,
+                child: ProfileScreen(),
+                transitionsBuilder:
+                    (context, animation, secondaryAnimation, child) => child,
+                transitionDuration: Duration.zero,
+              ),
         ),
       ],
     ),
     GoRoute(
       path: '/registerIntro',
       name: RouteName.registerIntro,
-      builder: (context, state) =>  RegisterIntroScreen(),
+      builder: (context, state) => RegisterIntroScreen(),
+    ),
+    GoRoute(
+      path: '/products/:categoryId',
+      builder: (context, state) {
+        final categoryId = int.parse(state.pathParameters['categoryId']!);
+        return ProductsScreen(categoryId: categoryId);
+      },
     ),
     GoRoute(
       path: '/registerVerify',
