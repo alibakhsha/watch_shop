@@ -98,8 +98,11 @@ class HomeScreen extends StatelessWidget {
             children: [
               for (var i = 0; i < state.categories.length; i++)
                 GestureDetector(
-                  onTap: (){
-                    context.push("/products/${i+1}");
+                  onTap: () {
+                    context.push(
+                      "/products/${i + 1}",
+                      extra: {'title': title[i]},
+                    );
                   },
                   child: Column(
                     children: [
@@ -116,7 +119,9 @@ class HomeScreen extends StatelessWidget {
                             end: Alignment.bottomCenter,
                           ),
                           borderRadius: BorderRadius.all(Radius.circular(10)),
-                          image: DecorationImage(image: NetworkImage(images[i])),
+                          image: DecorationImage(
+                            image: NetworkImage(images[i]),
+                          ),
                         ),
                       ),
                       SizedBox(height: 8.h),
@@ -141,9 +146,20 @@ class HomeScreen extends StatelessWidget {
             scrollDirection: Axis.horizontal,
             child: Row(
               children: [
-                RotatedText(
-                  title: "شگفت انگیز",
-                  textColor: AppColor.textRotateAmazingColor,
+                GestureDetector(
+                  onTap: () {
+                    context.push(
+                      '/products/0',
+                      extra: {
+                        'products': product,
+                        'title': "محصولات شگفت‌انگیز",
+                      },
+                    );
+                  },
+                  child: RotatedText(
+                    title: "شگفت انگیز",
+                    textColor: AppColor.textRotateAmazingColor,
+                  ),
                 ),
                 SizedBox(width: 20.w),
                 Wrap(
@@ -189,9 +205,17 @@ class HomeScreen extends StatelessWidget {
             scrollDirection: Axis.horizontal,
             child: Row(
               children: [
-                RotatedText(
-                  title: "پرفروش ها",
-                  textColor: AppColor.textRotateMostSellerColor,
+                GestureDetector(
+                  onTap: () {
+                    context.push(
+                      '/products/0',
+                      extra: {'products': product, 'title': "محصولات پرفروش"},
+                    );
+                  },
+                  child: RotatedText(
+                    title: "پرفروش ها",
+                    textColor: AppColor.textRotateMostSellerColor,
+                  ),
                 ),
                 SizedBox(width: 20.w),
                 Wrap(
@@ -217,21 +241,31 @@ class HomeScreen extends StatelessWidget {
           final product = state.newestProducts;
           return SingleChildScrollView(
             scrollDirection: Axis.horizontal,
-            child: Row(
-              children: [
-                RotatedText(
-                  title: "جدیدترین",
-                  textColor: AppColor.textRotateNewestColor,
-                ),
-                SizedBox(width: 20.w),
-                Wrap(
-                  spacing: 20.w,
-                  children:
-                      product
-                          .map((product) => ProductCard(productModel: product))
-                          .toList(),
-                ),
-              ],
+            child: GestureDetector(
+              onTap: () {
+                context.push(
+                  '/products/0',
+                  extra: {'products': product, 'title': "جدیدترین محصولات"},
+                );
+              },
+              child: Row(
+                children: [
+                  RotatedText(
+                    title: "جدیدترین",
+                    textColor: AppColor.textRotateNewestColor,
+                  ),
+                  SizedBox(width: 20.w),
+                  Wrap(
+                    spacing: 20.w,
+                    children:
+                        product
+                            .map(
+                              (product) => ProductCard(productModel: product),
+                            )
+                            .toList(),
+                  ),
+                ],
+              ),
             ),
           );
         }

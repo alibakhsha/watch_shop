@@ -17,6 +17,7 @@ import 'package:watch_shop/presentation/widgets/custom_shell_screen.dart';
 import '../../logic/bloc/product_bloc.dart';
 import '../../logic/event/product_event.dart';
 import '../../services/api_sevice.dart';
+import '../model/product_model.dart';
 
 final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>(
   debugLabel: 'root',
@@ -99,10 +100,21 @@ final GoRouter appRouter = GoRouter(
     GoRoute(
       path: '/products/:categoryId',
       builder: (context, state) {
-        final categoryId = int.parse(state.pathParameters['categoryId']!);
-        return ProductsScreen(categoryId: categoryId);
+        final categoryId = int.tryParse(
+          state.pathParameters['categoryId'] ?? '',
+        );
+        final extra = state.extra as Map<String, dynamic>? ?? {};
+        final products = extra['products'] as List<ProductModel>? ?? [];
+        final title = extra['title'] as String? ?? "محصولات";
+
+        return ProductsScreen(
+          categoryId: categoryId,
+          products: products.isNotEmpty ? products : null,
+          title: title,
+        );
       },
     ),
+
     GoRoute(
       path: '/registerVerify',
       name: RouteName.registerVerify,
