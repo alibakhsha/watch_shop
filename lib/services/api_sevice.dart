@@ -24,29 +24,4 @@ class ApiService {
   Future<Response> get(String path, {Map<String, dynamic>? headers}) async {
     return await dio.get(path, options: Options(headers: headers));
   }
-
-  // Future<Map<String, dynamic>> getHomeData() async {
-  //   try {
-  //     final response = await dio.get(
-  //       '/public/api/v1/home',
-  //       options: Options(
-  //         headers: {
-  //           'accept': 'application/json',
-  //           'X-CSRF-TOKEN': '',
-  //         },
-  //       ),
-  //     );
-  //
-  //     debugPrint('Home Data Response: ${response.data}');
-  //
-  //     if (response.statusCode == 200) {
-  //       return response.data;
-  //     } else {
-  //       throw Exception('Failed to load home data');
-  //     }
-  //   } catch (e) {
-  //     debugPrint('Error in getHomeData: $e');
-  //     rethrow;
-  //   }
-  // }
 }

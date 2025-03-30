@@ -1,6 +1,4 @@
 import 'package:bloc/bloc.dart';
-import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
 
 import '../../core/model/product_model.dart';
 import '../../services/api_sevice.dart';

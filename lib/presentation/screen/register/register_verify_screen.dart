@@ -45,7 +45,7 @@ class RegisterVerifyScreen extends StatelessWidget {
                   ),
                   SizedBox(height: 32.h),
                   Text(
-                    "کد فعال سازی برای ${mobile} ارسال شد",
+                    "کد فعال سازی برای $mobile} ارسال شد",
                     style: AppTextStyle.textFieldStyle,
                   ),
                   SizedBox(height: 12.h),

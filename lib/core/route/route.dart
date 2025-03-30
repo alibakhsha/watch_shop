@@ -1,7 +1,6 @@
 // route.dart
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart'; // برای CustomTransitionPage
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:go_router/go_router.dart';
 import 'package:watch_shop/core/route/route_name.dart';
@@ -14,9 +13,6 @@ import 'package:watch_shop/presentation/screen/register/register_sign_up_screen.
 import 'package:watch_shop/presentation/screen/register/register_verify_screen.dart';
 import 'package:watch_shop/presentation/widgets/custom_shell_screen.dart';
 
-import '../../logic/bloc/product_bloc.dart';
-import '../../logic/event/product_event.dart';
-import '../../services/api_sevice.dart';
 import '../model/product_model.dart';
 
 final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>(
