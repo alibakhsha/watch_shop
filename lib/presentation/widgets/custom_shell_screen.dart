@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:watch_shop/gen/assets.gen.dart';
 import '../../constant/app_color.dart';
 import '../../constant/app_text_style.dart';
+import 'app_bar.dart';
 
 class CustomShellScreen extends StatefulWidget {
   final Widget child;
@@ -43,10 +44,28 @@ class _CustomShellScreenState extends State<CustomShellScreen> {
     }
   }
 
+  PreferredSize? _buildAppBar(BuildContext context) {
+    final currentPath = GoRouterState.of(context).uri.toString();
+
+    if (currentPath == '/home') {
+      return null;
+    }
+
+    String title = '';
+    if (currentPath == '/cart') {
+      title = 'سبد خرید';
+    } else if (currentPath == '/profile') {
+      title = 'پروفایل';
+    }
+
+    return buildCPAppBar(title);
+  }
+  
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        appBar: _buildAppBar(context),
         backgroundColor: AppColor.bgColor,
         body: widget.child,
         bottomNavigationBar: BottomAppBar(

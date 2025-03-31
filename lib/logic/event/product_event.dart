@@ -1,24 +1,25 @@
-import 'package:equatable/equatable.dart';
+// logic/event/product_event.dart
+import 'package:watch_shop/core/enums/product_source.dart';
 
-abstract class ProductEvent extends Equatable {
-  @override
-  List<Object?> get props => [];
+abstract class ProductEvent {
+  const ProductEvent();
+}
+
+class FetchProducts extends ProductEvent {
+  final ProductSource productSource;
+  final int id;
+
+  const FetchProducts(this.productSource, this.id);
 }
 
 class FetchProductsByCategory extends ProductEvent {
   final int categoryId;
-  FetchProductsByCategory(this.categoryId);
 
-  @override
-  List<Object?> get props => [categoryId];
+  const FetchProductsByCategory(this.categoryId);
 }
 
 class FetchProductsByBrand extends ProductEvent {
   final int brandId;
-  FetchProductsByBrand(this.brandId);
 
-  @override
-  List<Object?> get props => [brandId];
+  const FetchProductsByBrand(this.brandId);
 }
-
-class FetchNewestProducts extends ProductEvent {}

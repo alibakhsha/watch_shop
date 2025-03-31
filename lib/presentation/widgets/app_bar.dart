@@ -6,7 +6,7 @@ import 'package:watch_shop/gen/assets.gen.dart';
 
 PreferredSize buildCustomSignUpAppBar(VoidCallback onPressed) {
   return PreferredSize(
-    preferredSize: Size.fromHeight(68.h),
+    preferredSize: Size.fromHeight(60.h),
     child: AppBar(
       backgroundColor: Colors.white,
       actions: [
@@ -36,9 +36,13 @@ PreferredSize buildCustomSignUpAppBar(VoidCallback onPressed) {
   );
 }
 
-PreferredSize buildProductsAppBar(VoidCallback onPressed1,VoidCallback onPressed2, String title) {
+PreferredSize buildProductsAppBar(
+  VoidCallback onPressed1,
+  VoidCallback onPressed2,
+  String title,
+) {
   return PreferredSize(
-    preferredSize: Size.fromHeight(68.h),
+    preferredSize: Size.fromHeight(60.h),
     child: AppBar(
       elevation: 4,
       shadowColor: Colors.black,
@@ -79,6 +83,24 @@ PreferredSize buildProductsAppBar(VoidCallback onPressed1,VoidCallback onPressed
               height: 14.h,
             ),
           ),
+        ),
+      ),
+    ),
+  );
+}
+
+PreferredSize buildCPAppBar(String title) {
+  return PreferredSize(
+    preferredSize: Size.fromHeight(60.h),
+    child: AppBar(
+      elevation: 4,
+      shadowColor: Colors.black,
+      backgroundColor: Colors.white,
+      leadingWidth: 80.w,
+      leading: Padding(
+        padding: EdgeInsets.fromLTRB(12.w, 12.h, 12.w, 12.h),
+        child: Center(
+          child: Text(title, style: AppTextStyle.textAppBarProductStyle),
         ),
       ),
     ),

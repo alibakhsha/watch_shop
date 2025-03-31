@@ -100,7 +100,7 @@ class HomeScreen extends StatelessWidget {
                 GestureDetector(
                   onTap: () {
                     context.push(
-                      "/products/${i + 1}",
+                      "/products/category/${i + 1}/",
                       extra: {'title': title[i]},
                     );
                   },
@@ -149,7 +149,7 @@ class HomeScreen extends StatelessWidget {
                 GestureDetector(
                   onTap: () {
                     context.push(
-                      '/products/0',
+                      '/products/amazing/0/',
                       extra: {
                         'products': product,
                         'title': "محصولات شگفت‌انگیز",
@@ -208,7 +208,7 @@ class HomeScreen extends StatelessWidget {
                 GestureDetector(
                   onTap: () {
                     context.push(
-                      '/products/0',
+                      '/products/mostSeller/0',
                       extra: {'products': product, 'title': "محصولات پرفروش"},
                     );
                   },
@@ -244,7 +244,7 @@ class HomeScreen extends StatelessWidget {
             child: GestureDetector(
               onTap: () {
                 context.push(
-                  '/products/0',
+                  '/products/newest/0/',
                   extra: {'products': product, 'title': "جدیدترین محصولات"},
                 );
               },
