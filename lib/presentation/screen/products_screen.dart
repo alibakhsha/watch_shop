@@ -31,50 +31,58 @@ class ProductsScreen extends StatelessWidget {
   });
 
   @override
+  @override
   Widget build(BuildContext context) {
     if (products == null) {
       if (productSource == ProductSource.category) {
-        BlocProvider.of<ProductBloc>(context).add(FetchProductsByCategory(sourceId));
+        BlocProvider.of<ProductBloc>(
+          context,
+        ).add(FetchProductsByCategory(sourceId));
       } else if (productSource == ProductSource.brand) {
-        BlocProvider.of<ProductBloc>(context).add(FetchProductsByBrand(sourceId));
+        BlocProvider.of<ProductBloc>(
+          context,
+        ).add(FetchProductsByBrand(sourceId));
+      } else {
+        BlocProvider.of<ProductBloc>(
+          context,
+        ).add(FetchProducts(productSource, sourceId));
       }
-      // else {
-      //   // برای بقیه موارد (مثل amazing, newest و غیره)
-      //   BlocProvider.of<ProductBloc>(context).add(FetchProducts(productSource, sourceId));
-      // }
     }
 
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: AppColor.bgColor,
-        appBar: buildProductsAppBar(() {}, context.pop, title),
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: EdgeInsets.fromLTRB(24.w, 20.h, 24.w, 0),
-            child: Column(
-              children: [
-                _buildBrandsSection(context),
-                SizedBox(height: 48.h),
-                BlocBuilder<ProductBloc, ProductState>(
-                  builder: (context, state) {
-                    if (state is ProductLoading) {
-                      return const Center(child: CircularProgressIndicator());
-                    }
-                    if (state is ProductLoaded) {
-                      final productList = products ?? state.products;
-                      return Wrap(
-                        spacing: 10.w,
-                        children: productList
-                            .map((product) => ProductCard(productModel: product))
+    return SingleChildScrollView(
+      child: Padding(
+        padding: EdgeInsets.fromLTRB(24.w, 20.h, 24.w, 0),
+        child: Column(
+          children: [
+            _buildBrandsSection(context),
+            SizedBox(height: 48.h),
+            BlocBuilder<ProductBloc, ProductState>(
+              builder: (context, state) {
+                if (state is ProductLoading) {
+                  return const Center(child: CircularProgressIndicator());
+                }
+                if (state is ProductLoaded) {
+                  final productList = products ?? state.products;
+                  debugPrint("Loaded Products: $productList");
+                  return Wrap(
+                    spacing: 10.w,
+                    children:
+                        productList
+                            .map(
+                              (product) => ProductCard(productModel: product),
+                            )
                             .toList(),
-                      );
-                    }
-                    return const Center(child: Text("محصولی یافت نشد!"));
-                  },
-                ),
-              ],
+                  );
+                }
+                if (state is ProductError) {
+                  debugPrint("Product Error: ${state.message}");
+                  return Center(child: Text("خطا: ${state.message}"));
+                }
+                debugPrint("Product State: $state");
+                return const Center(child: Text("محصولی یافت نشد!"));
+              },
             ),
-          ),
+          ],
         ),
       ),
     );
@@ -90,36 +98,37 @@ class ProductsScreen extends StatelessWidget {
             scrollDirection: Axis.horizontal,
             child: Wrap(
               spacing: 10.w,
-              children: state.brands
-                  .map(
-                    (brand) => GestureDetector(
-                  onTap: () {
-                    context.pushReplacement(
-                      "/products/brand/${brand.id}",
-                      extra: {'title': "محصولات برند ${brand.title}"},
-                    );
-                  },
-                  child: IntrinsicWidth(
-                    child: Container(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 24.w,
-                        vertical: 4.h,
-                      ),
-                      decoration: BoxDecoration(
-                        color: AppColor.bgButtonColor,
-                        borderRadius: BorderRadius.circular(50),
-                      ),
-                      child: Center(
-                        child: Text(
-                          brand.title,
-                          style: AppTextStyle.textButtonStyle,
+              children:
+                  state.brands
+                      .map(
+                        (brand) => GestureDetector(
+                          onTap: () {
+                            context.pushReplacement(
+                              "/products/brand/${brand.id}",
+                              extra: {'title': "محصولات برند ${brand.title}"},
+                            );
+                          },
+                          child: IntrinsicWidth(
+                            child: Container(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 24.w,
+                                vertical: 4.h,
+                              ),
+                              decoration: BoxDecoration(
+                                color: AppColor.bgButtonColor,
+                                borderRadius: BorderRadius.circular(50),
+                              ),
+                              child: Center(
+                                child: Text(
+                                  brand.title,
+                                  style: AppTextStyle.textButtonStyle,
+                                ),
+                              ),
+                            ),
+                          ),
                         ),
-                      ),
-                    ),
-                  ),
-                ),
-              )
-                  .toList(),
+                      )
+                      .toList(),
             ),
           );
         }

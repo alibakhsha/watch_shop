@@ -87,57 +87,56 @@ final GoRouter appRouter = GoRouter(
                 transitionDuration: Duration.zero,
               ),
         ),
+        GoRoute(
+          path: '/products/:source/:id',
+          builder: (context, state) {
+            final source = state.pathParameters['source'] ?? '';
+            final id = int.tryParse(state.pathParameters['id'] ?? '0') ?? 0;
+            final extra = state.extra as Map<String, dynamic>? ?? {};
+            final products = extra['products'] as List<ProductModel>? ?? [];
+            final title = extra['title'] as String? ?? "محصولات";
+
+            ProductSource productSource;
+            switch (source) {
+              case 'category':
+                productSource = ProductSource.category;
+                break;
+              case 'brand':
+                productSource = ProductSource.brand;
+                break;
+              case 'amazing':
+                productSource = ProductSource.amazing;
+                break;
+              case 'newest':
+                productSource = ProductSource.newest;
+                break;
+              case 'cheapest':
+                productSource = ProductSource.cheapest;
+                break;
+              case 'mostExpensive':
+                productSource = ProductSource.mostExpensive;
+                break;
+              case 'mostViewed':
+                productSource = ProductSource.mostViewed;
+                break;
+              default:
+                productSource = ProductSource.category;
+            }
+
+            return ProductsScreen(
+              productSource: productSource,
+              sourceId: id,
+              products: products.isNotEmpty ? products : null,
+              title: title,
+            );
+          },
+        ),
       ],
     ),
     GoRoute(
       path: '/registerIntro',
       name: RouteName.registerIntro,
       builder: (context, state) => RegisterIntroScreen(),
-    ),
-    // route.dart (بخشی از کد)
-    GoRoute(
-      path: '/products/:source/:id',
-      builder: (context, state) {
-        final source = state.pathParameters['source'] ?? '';
-        final id = int.tryParse(state.pathParameters['id'] ?? '0') ?? 0;
-        final extra = state.extra as Map<String, dynamic>? ?? {};
-        final products = extra['products'] as List<ProductModel>? ?? [];
-        final title = extra['title'] as String? ?? "محصولات";
-
-        ProductSource productSource;
-        switch (source) {
-          case 'category':
-            productSource = ProductSource.category;
-            break;
-          case 'brand':
-            productSource = ProductSource.brand;
-            break;
-          case 'amazing':
-            productSource = ProductSource.amazing;
-            break;
-          case 'newest':
-            productSource = ProductSource.newest;
-            break;
-          case 'cheapest':
-            productSource = ProductSource.cheapest;
-            break;
-          case 'mostExpensive':
-            productSource = ProductSource.mostExpensive;
-            break;
-          case 'mostViewed':
-            productSource = ProductSource.mostViewed;
-            break;
-          default:
-            productSource = ProductSource.category;
-        }
-
-        return ProductsScreen(
-          productSource: productSource,
-          sourceId: id,
-          products: products.isNotEmpty ? products : null,
-          title: title,
-        );
-      },
     ),
 
     GoRoute(
