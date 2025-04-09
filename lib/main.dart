@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:watch_shop/core/model/brand.dart';
 import 'package:watch_shop/core/route/route.dart';
 import 'package:watch_shop/logic/bloc/brand_bloc.dart';
 import 'package:watch_shop/logic/bloc/home_bloc.dart';

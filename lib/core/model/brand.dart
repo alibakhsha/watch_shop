@@ -1,4 +1,3 @@
-// models/brand.dart
 class BrandModel {
   final int id;
   final String title;

@@ -1,10 +1,13 @@
+// lib/logic/bloc/register_bloc.dart
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:watch_shop/core/model/user_data.dart';
+import 'package:watch_shop/logic/event/register_event.dart';
+import 'package:watch_shop/logic/state/register_state.dart';
+
 import '../../services/api_sevice.dart';
-import '../event/register_event.dart';
-import '../state/register_state.dart';
 
 class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
   final ApiService apiService;
@@ -14,7 +17,10 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
     on<RegisterUserEvent>(_onRegisterUser);
   }
 
-  Future<void> _onRegisterUser(RegisterUserEvent event, Emitter<RegisterState> emit) async {
+  Future<void> _onRegisterUser(
+      RegisterUserEvent event,
+      Emitter<RegisterState> emit,
+      ) async {
     emit(RegisterLoading());
     try {
       // گرفتن توکن از SecureStorage
@@ -31,10 +37,12 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
       List<MultipartFile> imageFiles = [];
       if (event.imagePaths != null) {
         for (String imagePath in event.imagePaths!) {
-          imageFiles.add(await MultipartFile.fromFile(
-            imagePath,
-            filename: 'profile_image.jpg',
-          ));
+          imageFiles.add(
+            await MultipartFile.fromFile(
+              imagePath,
+              filename: 'profile_image.jpg',
+            ),
+          );
         }
       }
 
@@ -50,7 +58,10 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
       });
 
       // ارسال درخواست
-      final response = await apiService.post('/public/api/v1/register', data: formData);
+      final response = await apiService.post(
+        '/public/api/v1/register',
+        data: formData,
+      );
 
       // پرینت جزئیات پاسخ
       debugPrint('Register Response Status: ${response.statusCode}');
@@ -58,9 +69,24 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
       debugPrint('User Data: ${response.data['data']['user']}');
 
       if (response.statusCode == 200 || response.statusCode == 201) {
-        emit(RegisterSuccess('User registered successfully'));
+        final registerResponse = RegisterUserResponse.fromJson(response.data);
+        debugPrint('Parsed RegisterUserResponse: $registerResponse');
+
+        // اضافه کردن imagePaths به UserData
+        final userDataWithImages = UserData(
+          id: registerResponse.data.id,
+          name: registerResponse.data.name,
+          mobile: registerResponse.data.mobile,
+          phone: registerResponse.data.phone,
+          address: registerResponse.data.address,
+          imagePaths: event.imagePaths, // مسیرهای محلی رو نگه می‌داریم
+        );
+
+        emit(RegisterSuccess(registerResponse.message, userDataWithImages));
       } else {
-        emit(RegisterFailure('Failed to register user: ${response.statusCode}'));
+        emit(
+          RegisterFailure('Failed to register user: ${response.statusCode}'),
+        );
       }
     } catch (e) {
       debugPrint('Register Error: $e');

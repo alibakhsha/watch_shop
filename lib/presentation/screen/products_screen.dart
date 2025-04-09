@@ -1,4 +1,3 @@
-// presentation/screen/products_screen.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -8,13 +7,11 @@ import 'package:watch_shop/constant/app_text_style.dart';
 import 'package:watch_shop/core/enums/product_source.dart';
 import 'package:watch_shop/logic/bloc/brand_bloc.dart';
 import 'package:watch_shop/logic/bloc/product_bloc.dart';
-import 'package:watch_shop/logic/event/brand_event.dart';
 import 'package:watch_shop/logic/event/product_event.dart';
 import 'package:watch_shop/logic/state/brand_state.dart';
 import 'package:watch_shop/logic/state/product_state.dart';
 import 'package:watch_shop/presentation/widgets/product_card.dart';
 import '../../core/model/product_model.dart';
-import '../widgets/app_bar.dart';
 
 class ProductsScreen extends StatelessWidget {
   final ProductSource productSource;

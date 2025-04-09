@@ -1,4 +1,3 @@
-// presentation/widgets/custom_shell_screen.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -7,14 +6,6 @@ import 'package:watch_shop/gen/assets.gen.dart';
 import '../../constant/app_color.dart';
 import '../../constant/app_text_style.dart';
 import 'app_bar.dart';
-
-// presentation/widgets/custom_shell_screen.dart
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:go_router/go_router.dart';
-import 'package:watch_shop/constant/app_color.dart';
-import 'package:watch_shop/constant/app_text_style.dart';
-import 'package:watch_shop/presentation/widgets/app_bar.dart';
 
 class CustomShellScreen extends StatefulWidget {
   final Widget child;
