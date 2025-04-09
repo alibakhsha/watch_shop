@@ -80,6 +80,11 @@ class AppTextStyle {
     fontSize: 12.w,
     color: Colors.black,
   );
+  static var profileTextStyle1 = TextStyle(
+    fontFamily: "Dana",
+    fontSize: 12.w,
+    color: Colors.black,
+  );
   static var textBottomNavStyle1 = TextStyle(
     fontFamily: "Dana",
     fontSize: 12.w,

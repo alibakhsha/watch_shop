@@ -241,31 +241,31 @@ class HomeScreen extends StatelessWidget {
           final product = state.newestProducts;
           return SingleChildScrollView(
             scrollDirection: Axis.horizontal,
-            child: GestureDetector(
-              onTap: () {
-                context.push(
-                  '/products/newest/0/',
-                  extra: {'products': product, 'title': "جدیدترین محصولات"},
-                );
-              },
-              child: Row(
-                children: [
-                  RotatedText(
+            child: Row(
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    context.push(
+                      '/products/newest/0/',
+                      extra: {'products': product, 'title': "جدیدترین محصولات"},
+                    );
+                  },
+                  child: RotatedText(
                     title: "جدیدترین",
                     textColor: AppColor.textRotateNewestColor,
                   ),
-                  SizedBox(width: 20.w),
-                  Wrap(
-                    spacing: 20.w,
-                    children:
-                        product
-                            .map(
-                              (product) => ProductCard(productModel: product),
-                            )
-                            .toList(),
-                  ),
-                ],
-              ),
+                ),
+                SizedBox(width: 20.w),
+                Wrap(
+                  spacing: 20.w,
+                  children:
+                      product
+                          .map(
+                            (product) => ProductCard(productModel: product),
+                          )
+                          .toList(),
+                ),
+              ],
             ),
           );
         }

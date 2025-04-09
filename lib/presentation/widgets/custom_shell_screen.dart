@@ -73,6 +73,7 @@ class _CustomShellScreenState extends State<CustomShellScreen> {
       child: Scaffold(
         backgroundColor: AppColor.bgColor,
         appBar: _buildAppBar(context),
+        //TODO: refactor
         body: widget.child,
         bottomNavigationBar: BottomAppBar(
           color: Colors.white,

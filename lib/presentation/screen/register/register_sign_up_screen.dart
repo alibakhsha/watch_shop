@@ -8,7 +8,7 @@ import 'package:watch_shop/core/route/route_name.dart';
 import 'package:watch_shop/logic/bloc/register_bloc.dart';
 import 'package:watch_shop/logic/state/image_picker_state.dart';
 import 'package:watch_shop/presentation/widgets/custom_button.dart';
-import 'package:watch_shop/presentation/widgets/profile.dart';
+import 'package:watch_shop/presentation/widgets/avatar.dart';
 import 'package:watch_shop/presentation/widgets/text_fields.dart';
 import 'package:watch_shop/services/api_sevice.dart';
 
@@ -43,7 +43,7 @@ class RegisterSignUpScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     SizedBox(height: 32.h),
-                    CustomProfile(),
+                    CustomAvatar(title: "انتخاب تصویر پروفایل"),
                     SizedBox(height: 32.h),
                     CustomTextField(
                       text: "نام و نام خانوادگی",

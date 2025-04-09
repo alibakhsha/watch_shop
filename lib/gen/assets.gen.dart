@@ -18,6 +18,10 @@ class $AssetsPngGen {
   /// File path: assets/png/banner.png
   AssetGenImage get banner => const AssetGenImage('assets/png/banner.png');
 
+  /// File path: assets/png/profile_banner.png
+  AssetGenImage get profileBanner =>
+      const AssetGenImage('assets/png/profile_banner.png');
+
   /// File path: assets/png/user.png
   AssetGenImage get user => const AssetGenImage('assets/png/user.png');
 
@@ -25,7 +29,13 @@ class $AssetsPngGen {
   AssetGenImage get watch => const AssetGenImage('assets/png/watch.png');
 
   /// List of all assets
-  List<AssetGenImage> get values => [amazing, banner, user, watch];
+  List<AssetGenImage> get values => [
+    amazing,
+    banner,
+    profileBanner,
+    user,
+    watch,
+  ];
 }
 
 class $AssetsSvgGen {

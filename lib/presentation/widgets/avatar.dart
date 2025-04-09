@@ -1,18 +1,25 @@
-// lib/presentation/widgets/profile.dart
+// lib/presentation/widgets/avatar.dart
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:watch_shop/constant/app_text_style.dart';
 import 'package:watch_shop/logic/bloc/image_picker_bloc.dart';
 import 'package:watch_shop/logic/event/image_picker_event.dart';
 import 'package:watch_shop/logic/state/image_picker_state.dart';
 import 'package:watch_shop/gen/assets.gen.dart';
 
-class CustomProfile extends StatelessWidget {
+class CustomAvatar extends StatelessWidget {
+  String title;
   final String? imagePath; // مسیر تصویر ذخیره‌شده (مثلاً از دیتابیس)
   final Function(String)? onImageChanged; // کال‌بک برای اطلاع دادن تغییر تصویر
 
-  const CustomProfile({super.key, this.imagePath, this.onImageChanged});
+  CustomAvatar({
+    super.key,
+    this.imagePath,
+    this.onImageChanged,
+    required this.title,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -32,8 +39,8 @@ class CustomProfile extends StatelessWidget {
             InkWell(
               onTap: () => _showImageSourceDialog(context),
               child: Container(
-                width: 72,
-                height: 72,
+                width: 82.w,
+                height: 82.h,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   image: DecorationImage(
@@ -44,7 +51,7 @@ class CustomProfile extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 12),
-            Text("انتخاب تصویر پروفایل", style: AppTextStyle.textFieldStyle),
+            Text(title, style: AppTextStyle.textFieldStyle),
           ],
         );
       },
