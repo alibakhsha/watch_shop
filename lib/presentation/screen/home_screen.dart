@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:watch_shop/constant/app_color.dart';
 import 'package:watch_shop/constant/app_text_style.dart';
+import 'package:watch_shop/core/route/route_name.dart';
 import 'package:watch_shop/logic/state/home_state.dart';
 import 'package:watch_shop/presentation/widgets/product_card.dart';
 import 'package:watch_shop/presentation/widgets/rotated_text.dart';
@@ -260,9 +261,7 @@ class HomeScreen extends StatelessWidget {
                   spacing: 20.w,
                   children:
                       product
-                          .map(
-                            (product) => ProductCard(productModel: product),
-                          )
+                          .map((product) => ProductCard(productModel: product))
                           .toList(),
                 ),
               ],

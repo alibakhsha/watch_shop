@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:watch_shop/core/enums/product_source.dart';
-import 'package:watch_shop/core/model/product_model.dart';
+import 'package:watch_shop/core/model/products_model.dart';
 import 'package:watch_shop/logic/event/product_event.dart';
 import 'package:watch_shop/logic/state/product_state.dart';
 
@@ -61,7 +61,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
                   : data['data'];
           final products =
               (productsJson as List)
-                  .map((json) => ProductModel.fromJson(json))
+                  .map((json) => ProductsModel.fromJson(json))
                   .toList();
           emit(ProductLoaded(products));
         } else {
@@ -90,7 +90,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
         if (data['result'] == true) {
           final productsJson = data['products_by_category']['data'] as List;
           final products =
-              productsJson.map((json) => ProductModel.fromJson(json)).toList();
+              productsJson.map((json) => ProductsModel.fromJson(json)).toList();
           emit(ProductLoaded(products));
         } else {
           emit(ProductError(data['message']));
@@ -122,7 +122,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
               data['products_by_brands']['data'] as List; // اصلاح کلید
           debugPrint("Products JSON: $productsJson");
           final products =
-              productsJson.map((json) => ProductModel.fromJson(json)).toList();
+              productsJson.map((json) => ProductsModel.fromJson(json)).toList();
           debugPrint("Parsed Products: $products");
           emit(ProductLoaded(products));
         } else {

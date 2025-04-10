@@ -7,7 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:watch_shop/constant/app_color.dart';
 import 'package:watch_shop/constant/app_text_style.dart';
-import 'package:watch_shop/core/database/user_database.dart';
+import 'package:watch_shop/data/database/user_database.dart';
 import 'package:watch_shop/gen/assets.gen.dart';
 import 'package:watch_shop/logic/bloc/user_bloc.dart';
 import 'package:watch_shop/logic/event/user_event.dart';

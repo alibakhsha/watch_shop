@@ -11,12 +11,12 @@ import 'package:watch_shop/logic/event/product_event.dart';
 import 'package:watch_shop/logic/state/brand_state.dart';
 import 'package:watch_shop/logic/state/product_state.dart';
 import 'package:watch_shop/presentation/widgets/product_card.dart';
-import '../../core/model/product_model.dart';
+import '../../../core/model/products_model.dart';
 
 class ProductsScreen extends StatelessWidget {
   final ProductSource productSource;
   final int sourceId;
-  final List<ProductModel>? products;
+  final List<ProductsModel>? products;
   final String title;
 
   const ProductsScreen({

@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../../core/model/home_page.dart';
-import '../../core/model/product_model.dart';
+import '../../core/model/products_model.dart';
 import '../../services/api_sevice.dart';
 import '../event/home_event.dart';
 import '../state/home_state.dart';
@@ -51,19 +51,19 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
                 ?.map((item) => CategoryModel.fromJson(item))
                 .toList() ??
             [];
-        final List<ProductModel> amazingProducts =
+        final List<ProductsModel> amazingProducts =
             (data['amazing_products'] as List<dynamic>?)
-                ?.map((item) => ProductModel.fromJson(item))
+                ?.map((item) => ProductsModel.fromJson(item))
                 .toList() ??
             [];
-        final List<ProductModel> mostSellerProducts =
+        final List<ProductsModel> mostSellerProducts =
             (data['most_seller_products'] as List<dynamic>?)
-                ?.map((item) => ProductModel.fromJson(item))
+                ?.map((item) => ProductsModel.fromJson(item))
                 .toList() ??
             [];
-        final List<ProductModel> newestProducts =
+        final List<ProductsModel> newestProducts =
             (data['newest_products'] as List<dynamic>?)
-                ?.map((item) => ProductModel.fromJson(item))
+                ?.map((item) => ProductsModel.fromJson(item))
                 .toList() ??
             [];
 

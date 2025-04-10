@@ -1,6 +1,6 @@
 import '../../presentation/widgets/product_card.dart';
 
-class ProductModel {
+class ProductsModel {
   final int id;
   final String title;
   final double price;
@@ -12,7 +12,7 @@ class ProductModel {
   final int productCount;
   final DateTime? specialExpiration;
 
-  ProductModel({
+  ProductsModel({
     required this.id,
     required this.title,
     required this.price,
@@ -25,8 +25,8 @@ class ProductModel {
     this.specialExpiration,
   });
 
-  factory ProductModel.fromJson(Map<String, dynamic> json) {
-    return ProductModel(
+  factory ProductsModel.fromJson(Map<String, dynamic> json) {
+    return ProductsModel(
       id: json['id'],
       title: json['title'],
       price: json['price'].toDouble(),

@@ -10,11 +10,11 @@ import 'package:watch_shop/logic/state/image_picker_state.dart';
 import 'package:watch_shop/gen/assets.gen.dart';
 
 class CustomAvatar extends StatelessWidget {
-  String title;
+  final String title;
   final String? imagePath; // مسیر تصویر ذخیره‌شده (مثلاً از دیتابیس)
   final Function(String)? onImageChanged; // کال‌بک برای اطلاع دادن تغییر تصویر
 
-  CustomAvatar({
+  const CustomAvatar({
     super.key,
     this.imagePath,
     this.onImageChanged,
@@ -23,38 +23,53 @@ class CustomAvatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ImagePickerBloc, ImagePickerState>(
-      builder: (context, state) {
-        File? imageFile;
+    return BlocListener<ImagePickerBloc, ImagePickerState>(
+      listener: (context, state) {
         if (state is ImagePickedSuccess) {
-          imageFile = state.image;
-
+          final imageFile = state.image;
           if (onImageChanged != null && imageFile != null) {
+            debugPrint('Image picked, calling onImageChanged: ${imageFile.path}');
             onImageChanged!(imageFile.path);
+            // ریست کردن حالت ImagePickerBloc بعد از فراخوانی
+            context.read<ImagePickerBloc>().add(ResetImagePicker());
           }
+        } else if (state is ImagePickedFailure) {
+          debugPrint('Image picker error: ${state.error}');
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('خطا در انتخاب تصویر: ${state.error}')),
+          );
         }
+      },
+      child: BlocBuilder<ImagePickerBloc, ImagePickerState>(
+        builder: (context, state) {
+          debugPrint('CustomAvatar BlocBuilder called with state: $state');
+          File? imageFile;
+          if (state is ImagePickedSuccess) {
+            imageFile = state.image;
+          }
 
-        return Column(
-          children: [
-            InkWell(
-              onTap: () => _showImageSourceDialog(context),
-              child: Container(
-                width: 82.w,
-                height: 82.h,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  image: DecorationImage(
-                    image: _getImageProvider(imageFile),
-                    fit: BoxFit.cover,
+          return Column(
+            children: [
+              InkWell(
+                onTap: () => _showImageSourceDialog(context),
+                child: Container(
+                  width: 82.w,
+                  height: 82.h,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    image: DecorationImage(
+                      image: _getImageProvider(imageFile),
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
               ),
-            ),
-            const SizedBox(height: 12),
-            Text(title, style: AppTextStyle.textFieldStyle),
-          ],
-        );
-      },
+              const SizedBox(height: 12),
+              Text(title, style: AppTextStyle.textFieldStyle),
+            ],
+          );
+        },
+      ),
     );
   }
 

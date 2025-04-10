@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:watch_shop/constant/app_color.dart';
-import 'package:watch_shop/core/database/user_database.dart';
+import 'package:watch_shop/data/database/user_database.dart';
 import 'package:watch_shop/core/route/route_name.dart';
 import 'package:watch_shop/logic/bloc/register_bloc.dart';
 import 'package:watch_shop/logic/state/image_picker_state.dart';

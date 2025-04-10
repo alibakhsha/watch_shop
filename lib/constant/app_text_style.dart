@@ -85,6 +85,16 @@ class AppTextStyle {
     fontSize: 12.w,
     color: Colors.black,
   );
+  static var singleProductTextStyle1 = TextStyle(
+    fontFamily: "Dana",
+    fontSize: 12.w,
+    color: Colors.black,
+  );
+  static var singleProductTextStyle2 = TextStyle(
+    fontFamily: "Dana",
+    fontSize: 12.w,
+    color: AppColor.productTextColor2,
+  );
   static var textBottomNavStyle1 = TextStyle(
     fontFamily: "Dana",
     fontSize: 12.w,

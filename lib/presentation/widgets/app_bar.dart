@@ -65,11 +65,7 @@ PreferredSize buildProductsAppBar(
       ],
       title: Row(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          SvgPicture.asset(Assets.svg.a61217, width: 30.w, height: 30.h),
-          SizedBox(width: 8.w),
-          Text(title, style: AppTextStyle.textAppBarProductStyle),
-        ],
+        children: [Text(title, style: AppTextStyle.textAppBarProductStyle)],
       ),
 
       leading: Padding(

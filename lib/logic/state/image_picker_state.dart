@@ -1,3 +1,4 @@
+
 import 'dart:io';
 import 'package:equatable/equatable.dart';
 
@@ -10,6 +11,7 @@ class ImageInitial extends ImagePickerState {}
 
 class ImagePickedSuccess extends ImagePickerState {
   final File image;
+
   ImagePickedSuccess({required this.image});
 
   @override
@@ -18,6 +20,7 @@ class ImagePickedSuccess extends ImagePickerState {
 
 class ImagePickedFailure extends ImagePickerState {
   final String error;
+
   ImagePickedFailure({required this.error});
 
   @override

@@ -13,5 +13,6 @@ class AppColor{
   static const textRotateMostSellerColor = Color.fromRGBO(207,39,85, 1);
   static const textRotateNewestColor = Color.fromRGBO(119,119,119, 1);
   static const profileBoxColor = Color.fromRGBO(243,243,243, 1);
+  static const productTextColor2 = Color.fromRGBO(844,84,84, 1);
   static const textButtonColor = Colors.white;
 }

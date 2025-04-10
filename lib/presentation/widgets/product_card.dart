@@ -1,54 +1,67 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:watch_shop/constant/app_color.dart';
 import 'package:watch_shop/constant/app_text_style.dart';
 
-import '../../core/model/product_model.dart';
+import '../../core/model/products_model.dart';
+import '../../core/route/route_name.dart';
 
 enum ProductType { normal, discount, timedDiscount }
 
 class ProductCard extends StatelessWidget {
-  final ProductModel productModel;
+  final ProductsModel productModel;
 
   const ProductCard({super.key, required this.productModel});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 182.w,
-      height: 320.h,
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [Color.fromRGBO(239, 239, 239, 1), Colors.white],
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
+    return GestureDetector(
+      onTap: () {
+        debugPrint(
+          'Navigating to: ${RouteName.singleProduct}/${productModel.id}',
+        );
+        context.pushNamed(
+          RouteName.singleProduct,
+          pathParameters: {'id': productModel.id.toString()},
+        );
+      },
+      child: Container(
+        width: 182.w,
+        height: 320.h,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Color.fromRGBO(239, 239, 239, 1), Colors.white],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
+          borderRadius: BorderRadius.all(Radius.circular(16)),
         ),
-        borderRadius: BorderRadius.all(Radius.circular(16)),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.all(Radius.circular(8)),
-              child: Image.network(
-                productModel.image,
-                height: 120.h,
-                fit: BoxFit.cover,
-                width: double.infinity,
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.all(Radius.circular(8)),
+                child: Image.network(
+                  productModel.image,
+                  height: 120.h,
+                  fit: BoxFit.cover,
+                  width: double.infinity,
+                ),
               ),
-            ),
-            SizedBox(height: 16.h),
-            Text(productModel.title, style: AppTextStyle.productTitleStyle),
-            SizedBox(height: 16.h),
+              SizedBox(height: 16.h),
+              Text(productModel.title, style: AppTextStyle.productTitleStyle),
+              SizedBox(height: 16.h),
 
-            if (productModel.productType == ProductType.normal)
-              _buildNormalPrice(),
-            if (productModel.productType == ProductType.discount)
-              _buildDiscountPrice(),
-            if (productModel.productType == ProductType.timedDiscount)
-              _buildTimedDiscount(),
-          ],
+              if (productModel.productType == ProductType.normal)
+                _buildNormalPrice(),
+              if (productModel.productType == ProductType.discount)
+                _buildDiscountPrice(),
+              if (productModel.productType == ProductType.timedDiscount)
+                _buildTimedDiscount(),
+            ],
+          ),
         ),
       ),
     );

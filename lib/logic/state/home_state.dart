@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 
 import '../../core/model/home_page.dart';
-import '../../core/model/product_model.dart';
+import '../../core/model/products_model.dart';
 
 abstract class HomeState extends Equatable {
   @override
@@ -13,9 +13,9 @@ class HomeLoading extends HomeState {}
 class HomeLoaded extends HomeState {
   final List<SliderModel> sliders;
   final List<CategoryModel> categories;
-  final List<ProductModel> amazingProducts;
-  final List<ProductModel> mostSellerProducts;
-  final List<ProductModel> newestProducts;
+  final List<ProductsModel> amazingProducts;
+  final List<ProductsModel> mostSellerProducts;
+  final List<ProductsModel> newestProducts;
 
   HomeLoaded({
     required this.sliders,

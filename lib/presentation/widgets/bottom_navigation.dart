@@ -1,8 +1,11 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:watch_shop/gen/assets.gen.dart';
+import 'package:watch_shop/presentation/widgets/custom_button.dart';
 
 import '../../constant/app_color.dart';
 import '../../constant/app_text_style.dart';
@@ -81,6 +84,74 @@ class CustomBottomNavigation extends StatelessWidget {
                 isSelected
                     ? AppTextStyle.textBottomNavStyle1
                     : AppTextStyle.textBottomNavStyle2,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class CustomSingleProductBottomNav extends StatelessWidget {
+  final double price;
+  final int discount;
+  final double discountPrice;
+
+  const CustomSingleProductBottomNav({
+    super.key,
+    required this.price,
+    required this.discount,
+    required this.discountPrice,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return BottomAppBar(
+      elevation: 1,
+      color: Colors.white,
+      height: 80.h,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          CustomButton(
+            text: "افزودن به سبد خرید",
+            onPressed: () {},
+            shape: ButtonShape.rectangle,
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Row(
+                children: [
+                  if (discount != 0)
+                    Container(
+                      width: 34.w,
+                      height: 18.h,
+                      decoration: BoxDecoration(
+                        color: Colors.red,
+                        borderRadius: BorderRadius.all(Radius.circular(50)),
+                      ),
+                      child: Center(
+                        child: Text(
+                          "%${discount.toString()}",
+                          style: AppTextStyle.productDiscountStyle,
+                        ),
+                      ),
+                    ),
+                  SizedBox(width: 6.w,),
+                  Text(
+                    discountPrice.toString(),
+                    style: AppTextStyle.productPriceStyle,
+                  ),
+                ],
+              ),
+              // SizedBox(height: 4.h,),
+              if (discountPrice != price)
+                Text(
+                  price.toString(),
+                  style: AppTextStyle.productDiscountPriceStyle,
+                ),
+            ],
           ),
         ],
       ),

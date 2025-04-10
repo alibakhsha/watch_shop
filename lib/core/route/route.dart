@@ -5,7 +5,8 @@ import 'package:go_router/go_router.dart';
 import 'package:watch_shop/core/route/route_name.dart';
 import 'package:watch_shop/presentation/screen/cart_screen.dart';
 import 'package:watch_shop/presentation/screen/home_screen.dart';
-import 'package:watch_shop/presentation/screen/products_screen.dart';
+import 'package:watch_shop/presentation/screen/products/products_screen.dart';
+import 'package:watch_shop/presentation/screen/products/single_product_screen.dart';
 import 'package:watch_shop/presentation/screen/profile_screen.dart';
 import 'package:watch_shop/presentation/screen/register/register_intro_screen.dart';
 import 'package:watch_shop/presentation/screen/register/register_sign_up_screen.dart';
@@ -13,7 +14,7 @@ import 'package:watch_shop/presentation/screen/register/register_verify_screen.d
 import 'package:watch_shop/presentation/widgets/custom_shell_screen.dart';
 
 import '../enums/product_source.dart';
-import '../model/product_model.dart';
+import '../model/products_model.dart';
 
 final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>(
   debugLabel: 'root',
@@ -92,7 +93,7 @@ final GoRouter appRouter = GoRouter(
             final source = state.pathParameters['source'] ?? '';
             final id = int.tryParse(state.pathParameters['id'] ?? '0') ?? 0;
             final extra = state.extra as Map<String, dynamic>? ?? {};
-            final products = extra['products'] as List<ProductModel>? ?? [];
+            final products = extra['products'] as List<ProductsModel>? ?? [];
             final title = extra['title'] as String? ?? "محصولات";
 
             ProductSource productSource;
@@ -150,6 +151,15 @@ final GoRouter appRouter = GoRouter(
       path: '/registerSignUp',
       name: RouteName.registerSignUp,
       builder: (context, state) => const RegisterSignUpScreen(),
+    ),
+
+    GoRoute(
+      path: '/singleProduct/:id', // مسیر داینامیک با پارامتر id
+      name: RouteName.singleProduct,
+      builder: (context, state) {
+        final id = int.tryParse(state.pathParameters['id'] ?? '0') ?? 0;
+        return SingleProductScreen(productId: id);
+      },
     ),
   ],
 );
