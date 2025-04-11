@@ -17,7 +17,7 @@ class ApiService {
     return await secureStorage.read(key: 'token');
   }
 
-  Future<Response> post(String path, {dynamic data}) async {
+  Future<Response> post(String path, {dynamic data, Map<String, String>? headers}) async {
     return await dio.post(path, data: data);
   }
 

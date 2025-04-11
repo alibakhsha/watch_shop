@@ -1,6 +1,7 @@
 import 'dart:ffi';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
@@ -9,6 +10,8 @@ import 'package:watch_shop/presentation/widgets/custom_button.dart';
 
 import '../../constant/app_color.dart';
 import '../../constant/app_text_style.dart';
+import '../../logic/bloc/cart_bloc.dart';
+import '../../logic/event/cart_event.dart';
 
 class CustomBottomNavigation extends StatelessWidget {
   const CustomBottomNavigation({super.key});
@@ -95,12 +98,13 @@ class CustomSingleProductBottomNav extends StatelessWidget {
   final double price;
   final int discount;
   final double discountPrice;
+  final int productId;
 
   const CustomSingleProductBottomNav({
     super.key,
     required this.price,
     required this.discount,
-    required this.discountPrice,
+    required this.discountPrice, required this.productId,
   });
 
   @override
@@ -114,7 +118,15 @@ class CustomSingleProductBottomNav extends StatelessWidget {
         children: [
           CustomButton(
             text: "افزودن به سبد خرید",
-            onPressed: () {},
+            onPressed: () {
+              context.read<CartBloc>().add(AddProductToCart(
+                productId: productId,
+                quantity: 1, // تعداد پیش‌فرض 1
+              ));
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('محصول به سبد خرید اضافه شد')),
+              );
+            },
             shape: ButtonShape.rectangle,
           ),
           Column(

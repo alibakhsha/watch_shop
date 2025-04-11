@@ -55,6 +55,7 @@ class SingleProductScreen extends StatelessWidget {
                   price: product.price,
                   discount: product.discount,
                   discountPrice: product.discountPrice,
+                  productId: productId,
                 ),
               );
             }

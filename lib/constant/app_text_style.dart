@@ -100,6 +100,31 @@ class AppTextStyle {
     fontSize: 12.w,
     color: Colors.black,
   );
+  static var cartPriceTextStyle = TextStyle(
+    fontFamily: "Dana",
+    fontSize: 12.w,
+    color: Color.fromRGBO(136, 141, 155, 1),
+  );
+  static var cartPriceDiscountTextStyle = TextStyle(
+    fontFamily: "Dana",
+    fontSize: 12.w,
+    color: Color.fromRGBO(0, 117, 251, 1),
+  );
+  static var cartTitleTextStyle = TextStyle(
+    fontFamily: "Dana",
+    fontSize: 12.w,
+    color: Colors.black,
+  );
+  static var cartCountTextStyle = TextStyle(
+    fontFamily: "Dana",
+    fontSize: 14.w,
+    color: Colors.black,
+  );
+  static var totalPriceTextStyle = TextStyle(
+    fontFamily: "Dana",
+    fontSize: 16.w,
+    color: Colors.black,
+  );
   static var textBottomNavStyle2 = TextStyle(
     fontFamily: "Dana",
     fontSize: 12.w,

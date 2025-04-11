@@ -65,7 +65,13 @@ PreferredSize buildProductsAppBar(
       ],
       title: Row(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: [Text(title, style: AppTextStyle.textAppBarProductStyle)],
+        children: [
+          Text(
+            title,
+            overflow: TextOverflow.ellipsis,
+            style: AppTextStyle.textAppBarProductStyle,
+          ),
+        ],
       ),
 
       leading: Padding(

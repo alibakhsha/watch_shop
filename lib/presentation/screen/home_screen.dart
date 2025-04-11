@@ -12,6 +12,7 @@ import 'package:watch_shop/presentation/widgets/rotated_text.dart';
 import '../../gen/assets.gen.dart';
 import '../../logic/bloc/home_bloc.dart';
 import '../../logic/event/home_event.dart';
+import '../widgets/cart_card.dart';
 import '../widgets/home_screen_banner.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -25,6 +26,7 @@ class HomeScreen extends StatelessWidget {
       child: SingleChildScrollView(
         child: Column(
           children: [
+            // CustomCartCard(imagePath: Assets.png.profileBanner.path,name: "علی",price: "5000",priceDiscount: "4000",),
             _buildSearchSection(),
             SizedBox(height: 24.h),
             HomeScreenBanner(),

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:watch_shop/core/route/route.dart';
 import 'package:watch_shop/logic/bloc/brand_bloc.dart';
+import 'package:watch_shop/logic/bloc/cart_bloc.dart';
 import 'package:watch_shop/logic/bloc/home_bloc.dart';
 import 'package:watch_shop/logic/bloc/image_picker_bloc.dart';
 import 'package:watch_shop/logic/bloc/product_bloc.dart';
@@ -29,6 +30,7 @@ class MyApp extends StatelessWidget {
               BlocProvider(create: (_) => ImagePickerBloc()),
               BlocProvider(create: (_) => HomeBloc(ApiService())),
               BlocProvider(create: (_) => ProductBloc(ApiService())),
+              BlocProvider(create: (_) => CartBloc(ApiService())),
               BlocProvider(
                 create: (_) => BrandBloc(ApiService())..add(FetchBrands()),
               ),
