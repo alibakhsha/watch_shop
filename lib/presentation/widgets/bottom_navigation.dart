@@ -94,7 +94,7 @@ class CustomBottomNavigation extends StatelessWidget {
   }
 }
 
-class CustomSingleProductBottomNav extends StatelessWidget {
+class CustomSingleProductBottomNav extends StatefulWidget {
   final double price;
   final int discount;
   final double discountPrice;
@@ -104,8 +104,56 @@ class CustomSingleProductBottomNav extends StatelessWidget {
     super.key,
     required this.price,
     required this.discount,
-    required this.discountPrice, required this.productId,
+    required this.discountPrice,
+    required this.productId,
   });
+
+  @override
+  State<CustomSingleProductBottomNav> createState() =>
+      _CustomSingleProductBottomNavState();
+}
+
+class _CustomSingleProductBottomNavState
+    extends State<CustomSingleProductBottomNav> {
+  int quantity = 0;
+
+  void _addToCart() {
+    setState(() {
+      quantity = 1;
+    });
+
+    context.read<CartBloc>().add(
+      AddProductToCart(productId: widget.productId, quantity: 1),
+    );
+
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(const SnackBar(content: Text('محصول به سبد خرید اضافه شد')));
+  }
+
+  void _increment() {
+    setState(() {
+      quantity++;
+    });
+
+    context.read<CartBloc>().add(IncreaseCartItemQuantity(widget.productId));
+  }
+
+  void _decrement() {
+    if (quantity > 1) {
+      setState(() {
+        quantity--;
+      });
+
+      context.read<CartBloc>().add(DecreaseCartItemQuantity(widget.productId));
+    } else {
+      setState(() {
+        quantity = 0;
+      });
+
+      context.read<CartBloc>().add(DeleteCartItem(widget.productId));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -116,26 +164,34 @@ class CustomSingleProductBottomNav extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          CustomButton(
-            text: "افزودن به سبد خرید",
-            onPressed: () {
-              context.read<CartBloc>().add(AddProductToCart(
-                productId: productId,
-                quantity: 1, // تعداد پیش‌فرض 1
-              ));
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('محصول به سبد خرید اضافه شد')),
-              );
-            },
-            shape: ButtonShape.rectangle,
-          ),
+          quantity == 0
+              ? CustomButton(
+                text: "افزودن به سبد خرید",
+                onPressed: _addToCart,
+                shape: ButtonShape.rectangle,
+              )
+              : Row(
+                children: [
+                  GestureDetector(
+                    onTap: _increment,
+                    child: SvgPicture.asset(Assets.svg.plus),
+                  ),
+                  SizedBox(width: 8.w),
+                  Text("$quantity عدد", style: AppTextStyle.cartCountTextStyle),
+                  SizedBox(width: 8.w),
+                  GestureDetector(
+                    onTap: _decrement,
+                    child: SvgPicture.asset(Assets.svg.minus),
+                  ),
+                ],
+              ),
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Row(
                 children: [
-                  if (discount != 0)
+                  if (widget.discount != 0)
                     Container(
                       width: 34.w,
                       height: 18.h,
@@ -145,22 +201,21 @@ class CustomSingleProductBottomNav extends StatelessWidget {
                       ),
                       child: Center(
                         child: Text(
-                          "%${discount.toString()}",
+                          "%${widget.discount}",
                           style: AppTextStyle.productDiscountStyle,
                         ),
                       ),
                     ),
-                  SizedBox(width: 6.w,),
+                  SizedBox(width: 6.w),
                   Text(
-                    discountPrice.toString(),
+                    widget.discountPrice.toString(),
                     style: AppTextStyle.productPriceStyle,
                   ),
                 ],
               ),
-              // SizedBox(height: 4.h,),
-              if (discountPrice != price)
+              if (widget.discountPrice != widget.price)
                 Text(
-                  price.toString(),
+                  widget.price.toString(),
                   style: AppTextStyle.productDiscountPriceStyle,
                 ),
             ],
