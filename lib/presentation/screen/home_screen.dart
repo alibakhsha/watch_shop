@@ -4,7 +4,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:watch_shop/constant/app_color.dart';
 import 'package:watch_shop/constant/app_text_style.dart';
-import 'package:watch_shop/core/route/route_name.dart';
 import 'package:watch_shop/logic/state/home_state.dart';
 import 'package:watch_shop/presentation/widgets/product_card.dart';
 import 'package:watch_shop/presentation/widgets/rotated_text.dart';
@@ -12,7 +11,6 @@ import 'package:watch_shop/presentation/widgets/rotated_text.dart';
 import '../../gen/assets.gen.dart';
 import '../../logic/bloc/home_bloc.dart';
 import '../../logic/event/home_event.dart';
-import '../widgets/cart_card.dart';
 import '../widgets/home_screen_banner.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -26,8 +24,7 @@ class HomeScreen extends StatelessWidget {
       child: SingleChildScrollView(
         child: Column(
           children: [
-            // CustomCartCard(imagePath: Assets.png.profileBanner.path,name: "علی",price: "5000",priceDiscount: "4000",),
-            _buildSearchSection(),
+            _buildSearchSection(context),
             SizedBox(height: 24.h),
             HomeScreenBanner(),
             SizedBox(height: 24.h),
@@ -48,7 +45,29 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildSearchSection() {
+  Widget _buildSearchSection(BuildContext context) {
+    final TextEditingController searchController = TextEditingController();
+
+    void performSearch(BuildContext context) {
+      final searchQuery = searchController.text.trim();
+      debugPrint('Search Query Entered: $searchQuery');
+      if (searchQuery.isNotEmpty) {
+        debugPrint('Navigating to /products/search/0/ with query: $searchQuery');
+        context.push(
+          '/products/search/0/',
+          extra: {
+            'searchQuery': searchQuery,
+            'title': 'نتایج جستجو برای "$searchQuery"',
+          },
+        );
+      } else {
+        debugPrint('Search Query is Empty');
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('لطفاً یک عبارت جستجو وارد کنید')),
+        );
+      }
+    }
+
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(50)),
@@ -62,6 +81,10 @@ class HomeScreen extends StatelessWidget {
         ],
       ),
       child: TextField(
+        controller: searchController,
+        onSubmitted: (value) {
+          performSearch(context); // فراخوانی تابع جستجو هنگام زدن Done
+        },
         decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(10, 20, 10, 20),
           prefixIcon: Image.asset(
@@ -69,7 +92,12 @@ class HomeScreen extends StatelessWidget {
             width: 98.w,
             height: 38.h,
           ),
-          suffixIcon: Icon(Icons.search, size: 24),
+          suffixIcon: IconButton(
+            icon: Icon(Icons.search, size: 24),
+            onPressed: () {
+              performSearch(context); // فراخوانی تابع جستجو هنگام کلیک روی آیکون
+            },
+          ),
           border: OutlineInputBorder(
             borderSide: BorderSide.none,
             borderRadius: BorderRadius.all(Radius.circular(50)),

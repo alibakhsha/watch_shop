@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+// lib/core/route/app_router.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:go_router/go_router.dart';
@@ -53,39 +53,32 @@ final GoRouter appRouter = GoRouter(
         GoRoute(
           path: '/home',
           name: RouteName.home,
-          pageBuilder:
-              (context, state) => CustomTransitionPage(
-                key: state.pageKey,
-                child: const HomeScreen(),
-                transitionsBuilder:
-                    (context, animation, secondaryAnimation, child) =>
-                        child, // بدون انیمیشن
-                transitionDuration: Duration.zero, // مدت زمان صفر
-              ),
+          pageBuilder: (context, state) => CustomTransitionPage(
+            key: state.pageKey,
+            child: const HomeScreen(),
+            transitionsBuilder: (context, animation, secondaryAnimation, child) => child,
+            transitionDuration: Duration.zero,
+          ),
         ),
         GoRoute(
           path: '/cart',
           name: RouteName.cart,
-          pageBuilder:
-              (context, state) => CustomTransitionPage(
-                key: state.pageKey,
-                child: CartScreen(),
-                transitionsBuilder:
-                    (context, animation, secondaryAnimation, child) => child,
-                transitionDuration: Duration.zero,
-              ),
+          pageBuilder: (context, state) => CustomTransitionPage(
+            key: state.pageKey,
+            child: CartScreen(),
+            transitionsBuilder: (context, animation, secondaryAnimation, child) => child,
+            transitionDuration: Duration.zero,
+          ),
         ),
         GoRoute(
           path: '/profile',
           name: RouteName.profile,
-          pageBuilder:
-              (context, state) => CustomTransitionPage(
-                key: state.pageKey,
-                child: ProfileScreen(),
-                transitionsBuilder:
-                    (context, animation, secondaryAnimation, child) => child,
-                transitionDuration: Duration.zero,
-              ),
+          pageBuilder: (context, state) => CustomTransitionPage(
+            key: state.pageKey,
+            child: ProfileScreen(),
+            transitionsBuilder: (context, animation, secondaryAnimation, child) => child,
+            transitionDuration: Duration.zero,
+          ),
         ),
         GoRoute(
           path: '/products/:source/:id',
@@ -95,6 +88,7 @@ final GoRouter appRouter = GoRouter(
             final extra = state.extra as Map<String, dynamic>? ?? {};
             final products = extra['products'] as List<ProductsModel>? ?? [];
             final title = extra['title'] as String? ?? "محصولات";
+            final searchQuery = extra['searchQuery'] as String? ?? '';
 
             ProductSource productSource;
             switch (source) {
@@ -119,6 +113,9 @@ final GoRouter appRouter = GoRouter(
               case 'mostViewed':
                 productSource = ProductSource.mostViewed;
                 break;
+              case 'search':
+                productSource = ProductSource.search;
+                break;
               default:
                 productSource = ProductSource.category;
             }
@@ -128,6 +125,7 @@ final GoRouter appRouter = GoRouter(
               sourceId: id,
               products: products.isNotEmpty ? products : null,
               title: title,
+              searchQuery: searchQuery, // اضافه کردن searchQuery
             );
           },
         ),
@@ -138,7 +136,6 @@ final GoRouter appRouter = GoRouter(
       name: RouteName.registerIntro,
       builder: (context, state) => RegisterIntroScreen(),
     ),
-
     GoRoute(
       path: '/registerVerify',
       name: RouteName.registerVerify,
@@ -152,9 +149,8 @@ final GoRouter appRouter = GoRouter(
       name: RouteName.registerSignUp,
       builder: (context, state) => const RegisterSignUpScreen(),
     ),
-
     GoRoute(
-      path: '/singleProduct/:id', // مسیر داینامیک با پارامتر id
+      path: '/singleProduct/:id',
       name: RouteName.singleProduct,
       builder: (context, state) {
         final id = int.tryParse(state.pathParameters['id'] ?? '0') ?? 0;

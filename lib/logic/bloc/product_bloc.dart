@@ -1,27 +1,27 @@
-import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:watch_shop/core/enums/product_source.dart';
 import 'package:watch_shop/core/model/products_model.dart';
 import 'package:watch_shop/logic/event/product_event.dart';
 import 'package:watch_shop/logic/state/product_state.dart';
-
+import 'package:bloc/bloc.dart';
 import '../../services/api_sevice.dart';
 
 class ProductBloc extends Bloc<ProductEvent, ProductState> {
   final ApiService _apiService;
 
   ProductBloc([ApiService? apiService])
-    : _apiService = apiService ?? ApiService(),
-      super(ProductInitial()) {
+      : _apiService = apiService ?? ApiService(),
+        super(ProductInitial()) {
     on<FetchProducts>(_onFetchProducts);
     on<FetchProductsByCategory>(_onFetchProductsByCategory);
     on<FetchProductsByBrand>(_onFetchProductsByBrand);
+    on<FetchProductsBySearch>(_onFetchProductsBySearch); // اضافه کردن
   }
 
   Future<void> _onFetchProducts(
-    FetchProducts event,
-    Emitter<ProductState> emit,
-  ) async {
+      FetchProducts event,
+      Emitter<ProductState> emit,
+      ) async {
     emit(ProductLoading());
     try {
       String path;
@@ -47,6 +47,9 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
         case ProductSource.brand:
           path = '/public/api/v1/products_by_brand/${event.id}';
           break;
+        case ProductSource.search:
+          emit(ProductError('برای جستجو از FetchProductsBySearch استفاده کنید'));
+          return;
       }
 
       final response = await _apiService.get(path);
@@ -55,14 +58,13 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
         final data = response.data;
         if (data['result'] == true) {
           final productsJson =
-              event.productSource == ProductSource.category ||
-                      event.productSource == ProductSource.brand
-                  ? data['products_by_category']['data'] // یا products_by_brand
-                  : data['data'];
-          final products =
-              (productsJson as List)
-                  .map((json) => ProductsModel.fromJson(json))
-                  .toList();
+          event.productSource == ProductSource.category ||
+              event.productSource == ProductSource.brand
+              ? data['products_by_category']['data']
+              : data['data'];
+          final products = (productsJson as List)
+              .map((json) => ProductsModel.fromJson(json))
+              .toList();
           emit(ProductLoaded(products));
         } else {
           emit(ProductError(data['message']));
@@ -76,9 +78,9 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
   }
 
   Future<void> _onFetchProductsByCategory(
-    FetchProductsByCategory event,
-    Emitter<ProductState> emit,
-  ) async {
+      FetchProductsByCategory event,
+      Emitter<ProductState> emit,
+      ) async {
     emit(ProductLoading());
     try {
       final response = await _apiService.get(
@@ -90,7 +92,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
         if (data['result'] == true) {
           final productsJson = data['products_by_category']['data'] as List;
           final products =
-              productsJson.map((json) => ProductsModel.fromJson(json)).toList();
+          productsJson.map((json) => ProductsModel.fromJson(json)).toList();
           emit(ProductLoaded(products));
         } else {
           emit(ProductError(data['message']));
@@ -103,11 +105,10 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     }
   }
 
-  // logic/bloc/product_bloc.dart (بخشی از کد)
   Future<void> _onFetchProductsByBrand(
-    FetchProductsByBrand event,
-    Emitter<ProductState> emit,
-  ) async {
+      FetchProductsByBrand event,
+      Emitter<ProductState> emit,
+      ) async {
     emit(ProductLoading());
     try {
       final response = await _apiService.get(
@@ -118,11 +119,10 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
       if (response.statusCode == 200) {
         final data = response.data;
         if (data['result'] == true) {
-          final productsJson =
-              data['products_by_brands']['data'] as List; // اصلاح کلید
+          final productsJson = data['products_by_brands']['data'] as List;
           debugPrint("Products JSON: $productsJson");
           final products =
-              productsJson.map((json) => ProductsModel.fromJson(json)).toList();
+          productsJson.map((json) => ProductsModel.fromJson(json)).toList();
           debugPrint("Parsed Products: $products");
           emit(ProductLoaded(products));
         } else {
@@ -132,6 +132,47 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
         emit(ProductError('خطا در دریافت داده‌ها: ${response.statusCode}'));
       }
     } catch (e) {
+      emit(ProductError('خطای شبکه: $e'));
+    }
+  }
+
+  Future<void> _onFetchProductsBySearch(
+      FetchProductsBySearch event,
+      Emitter<ProductState> emit,
+      ) async {
+    emit(ProductLoading());
+    debugPrint('Fetching products for search query: ${event.searchQuery}');
+    try {
+      final encodedQuery = Uri.encodeComponent(event.searchQuery);
+      debugPrint('Encoded Search Query: $encodedQuery');
+      // ارسال به صورت مسیر URL
+      final response = await _apiService.get(
+        '/public/api/v1/all_products/$encodedQuery',
+      );
+      debugPrint("Search Response Status: ${response.statusCode}");
+      debugPrint("Search Response Data: ${response.data}");
+
+      if (response.statusCode == 200) {
+        final data = response.data;
+        debugPrint("Search Result: ${data['result']}");
+        final productsJson = data['all_products']?['data'] as List?;
+        debugPrint("Search Products JSON: $productsJson");
+
+        if (productsJson != null && productsJson.isNotEmpty) {
+          final products =
+          productsJson.map((json) => ProductsModel.fromJson(json)).toList();
+          debugPrint("Parsed Search Products: $products");
+          emit(ProductLoaded(products));
+        } else {
+          debugPrint("No products found for query: ${event.searchQuery}");
+          emit(ProductError('هیچ محصولی برای "${event.searchQuery}" یافت نشد'));
+        }
+      } else {
+        debugPrint("Search Failed with Status: ${response.statusCode}");
+        emit(ProductError('خطا در دریافت داده‌ها: ${response.statusCode}'));
+      }
+    } catch (e) {
+      debugPrint("Search Error: $e");
       emit(ProductError('خطای شبکه: $e'));
     }
   }

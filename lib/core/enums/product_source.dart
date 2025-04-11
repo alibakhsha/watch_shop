@@ -6,4 +6,5 @@ enum ProductSource {
   cheapest,
   mostExpensive,
   mostViewed,
+  search
 }

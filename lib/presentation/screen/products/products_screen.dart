@@ -18,6 +18,7 @@ class ProductsScreen extends StatelessWidget {
   final int sourceId;
   final List<ProductsModel>? products;
   final String title;
+  final String? searchQuery; // اضافه کردن searchQuery
 
   const ProductsScreen({
     super.key,
@@ -25,24 +26,22 @@ class ProductsScreen extends StatelessWidget {
     required this.sourceId,
     this.products,
     required this.title,
+    this.searchQuery, // اضافه کردن به سازنده
   });
 
-  @override
   @override
   Widget build(BuildContext context) {
     if (products == null) {
       if (productSource == ProductSource.category) {
-        BlocProvider.of<ProductBloc>(
-          context,
-        ).add(FetchProductsByCategory(sourceId));
+        BlocProvider.of<ProductBloc>(context).add(FetchProductsByCategory(sourceId));
       } else if (productSource == ProductSource.brand) {
-        BlocProvider.of<ProductBloc>(
-          context,
-        ).add(FetchProductsByBrand(sourceId));
+        BlocProvider.of<ProductBloc>(context).add(FetchProductsByBrand(sourceId));
+      } else if (productSource == ProductSource.search) {
+        if (searchQuery != null && searchQuery!.isNotEmpty) {
+          BlocProvider.of<ProductBloc>(context).add(FetchProductsBySearch(searchQuery!));
+        }
       } else {
-        BlocProvider.of<ProductBloc>(
-          context,
-        ).add(FetchProducts(productSource, sourceId));
+        BlocProvider.of<ProductBloc>(context).add(FetchProducts(productSource, sourceId));
       }
     }
 
@@ -63,12 +62,11 @@ class ProductsScreen extends StatelessWidget {
                   debugPrint("Loaded Products: $productList");
                   return Wrap(
                     spacing: 10.w,
-                    children:
-                        productList
-                            .map(
-                              (product) => ProductCard(productModel: product),
-                            )
-                            .toList(),
+                    children: productList
+                        .map(
+                          (product) => ProductCard(productModel: product),
+                    )
+                        .toList(),
                   );
                 }
                 if (state is ProductError) {
@@ -95,37 +93,36 @@ class ProductsScreen extends StatelessWidget {
             scrollDirection: Axis.horizontal,
             child: Wrap(
               spacing: 10.w,
-              children:
-                  state.brands
-                      .map(
-                        (brand) => GestureDetector(
-                          onTap: () {
-                            context.pushReplacement(
-                              "/products/brand/${brand.id}",
-                              extra: {'title': "محصولات برند ${brand.title}"},
-                            );
-                          },
-                          child: IntrinsicWidth(
-                            child: Container(
-                              padding: EdgeInsets.symmetric(
-                                horizontal: 24.w,
-                                vertical: 4.h,
-                              ),
-                              decoration: BoxDecoration(
-                                color: AppColor.bgButtonColor,
-                                borderRadius: BorderRadius.circular(50),
-                              ),
-                              child: Center(
-                                child: Text(
-                                  brand.title,
-                                  style: AppTextStyle.textButtonStyle,
-                                ),
-                              ),
-                            ),
-                          ),
+              children: state.brands
+                  .map(
+                    (brand) => GestureDetector(
+                  onTap: () {
+                    context.pushReplacement(
+                      "/products/brand/${brand.id}",
+                      extra: {'title': "محصولات برند ${brand.title}"},
+                    );
+                  },
+                  child: IntrinsicWidth(
+                    child: Container(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 24.w,
+                        vertical: 4.h,
+                      ),
+                      decoration: BoxDecoration(
+                        color: AppColor.bgButtonColor,
+                        borderRadius: BorderRadius.circular(50),
+                      ),
+                      child: Center(
+                        child: Text(
+                          brand.title,
+                          style: AppTextStyle.textButtonStyle,
                         ),
-                      )
-                      .toList(),
+                      ),
+                    ),
+                  ),
+                ),
+              )
+                  .toList(),
             ),
           );
         }
