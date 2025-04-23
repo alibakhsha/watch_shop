@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -78,6 +76,7 @@ class CustomBottomNavigation extends StatelessWidget {
         children: [
           SvgPicture.asset(
             icon,
+            // ignore: deprecated_member_use
             color: isSelected ? Colors.black : AppColor.bottomNavIcon2Color,
             width: 30.w,
             height: 30.h,
@@ -122,9 +121,9 @@ class _CustomSingleProductBottomNavState
       AddProductToCart(productId: widget.productId, quantity: 1),
     );
 
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('محصول به سبد خرید اضافه شد')),
-    );
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(const SnackBar(content: Text('محصول به سبد خرید اضافه شد')));
   }
 
   void _increment() {
@@ -147,16 +146,17 @@ class _CustomSingleProductBottomNavState
         int quantity = 0;
         if (state is CartLoaded) {
           final cartItem = state.cartItems.firstWhere(
-                (item) => item.productId == widget.productId,
-            orElse: () => CartItem(
-              id: 0, // مقدار پیش‌فرض برای id
-              productId: widget.productId,
-              productTitle: '', // مقدار پیش‌فرض برای productTitle
-              quantity: 0,
-              image: '', // مقدار پیش‌فرض برای image
-              price: 0.0, // مقدار پیش‌فرض برای price
-              priceDiscount: 0.0, // مقدار پیش‌فرض برای priceDiscount
-            ),
+            (item) => item.productId == widget.productId,
+            orElse:
+                () => CartItem(
+                  id: 0, // مقدار پیش‌فرض برای id
+                  productId: widget.productId,
+                  productTitle: '', // مقدار پیش‌فرض برای productTitle
+                  quantity: 0,
+                  image: '', // مقدار پیش‌فرض برای image
+                  price: 0.0, // مقدار پیش‌فرض برای price
+                  priceDiscount: 0.0, // مقدار پیش‌فرض برای priceDiscount
+                ),
           );
           quantity = cartItem.quantity;
         }
@@ -170,28 +170,28 @@ class _CustomSingleProductBottomNavState
             children: [
               quantity == 0
                   ? CustomButton(
-                text: "افزودن به سبد خرید",
-                onPressed: _addToCart,
-                shape: ButtonShape.rectangle,
-              )
+                    text: "افزودن به سبد خرید",
+                    onPressed: _addToCart,
+                    shape: ButtonShape.rectangle,
+                  )
                   : Row(
-                children: [
-                  GestureDetector(
-                    onTap: _increment,
-                    child: SvgPicture.asset(Assets.svg.plus),
+                    children: [
+                      GestureDetector(
+                        onTap: _increment,
+                        child: SvgPicture.asset(Assets.svg.plus),
+                      ),
+                      SizedBox(width: 8.w),
+                      Text(
+                        "$quantity عدد",
+                        style: AppTextStyle.cartCountTextStyle,
+                      ),
+                      SizedBox(width: 8.w),
+                      GestureDetector(
+                        onTap: () => _decrement(quantity),
+                        child: SvgPicture.asset(Assets.svg.minus),
+                      ),
+                    ],
                   ),
-                  SizedBox(width: 8.w),
-                  Text(
-                    "$quantity عدد",
-                    style: AppTextStyle.cartCountTextStyle,
-                  ),
-                  SizedBox(width: 8.w),
-                  GestureDetector(
-                    onTap: () => _decrement(quantity),
-                    child: SvgPicture.asset(Assets.svg.minus),
-                  ),
-                ],
-              ),
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.end,

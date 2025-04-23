@@ -3,6 +3,7 @@ import 'package:watch_shop/core/enums/product_source.dart';
 import 'package:watch_shop/core/model/products_model.dart';
 import 'package:watch_shop/logic/event/product_event.dart';
 import 'package:watch_shop/logic/state/product_state.dart';
+// ignore: depend_on_referenced_packages
 import 'package:bloc/bloc.dart';
 import '../../services/api_sevice.dart';
 

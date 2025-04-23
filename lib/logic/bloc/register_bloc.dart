@@ -1,4 +1,3 @@
-// lib/logic/bloc/register_bloc.dart
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
@@ -6,7 +5,6 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:watch_shop/core/model/user_data.dart';
 import 'package:watch_shop/logic/event/register_event.dart';
 import 'package:watch_shop/logic/state/register_state.dart';
-
 import '../../services/api_sevice.dart';
 
 class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
@@ -23,15 +21,16 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
       ) async {
     emit(RegisterLoading());
     try {
-      // گرفتن توکن از SecureStorage
-      String? token = await secureStorage.read(key: 'token');
-      if (token == null) {
-        emit(RegisterFailure('No token available'));
+      // پرینت توکن برای دیباگ
+      debugPrint('Token received in RegisterBloc: ${event.token}');
+      if (event.token.isEmpty) {
+        emit(RegisterFailure('No token provided'));
         return;
       }
 
       // تنظیم هدر Authorization
-      apiService.dio.options.headers['Authorization'] = 'Bearer $token';
+      apiService.dio.options.headers['Authorization'] = 'Bearer ${event.token}';
+      debugPrint('Authorization Header: ${apiService.dio.options.headers['Authorization']}');
 
       // آماده‌سازی فایل‌های تصویر
       List<MultipartFile> imageFiles = [];
@@ -57,6 +56,9 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
         if (imageFiles.isNotEmpty) 'image': imageFiles,
       });
 
+      // پرینت داده‌های ارسالی برای دیباگ
+      debugPrint('FormData: ${formData.fields}');
+
       // ارسال درخواست
       final response = await apiService.post(
         '/public/api/v1/register',
@@ -79,8 +81,12 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
           mobile: registerResponse.data.mobile,
           phone: registerResponse.data.phone,
           address: registerResponse.data.address,
-          imagePaths: event.imagePaths, // مسیرهای محلی رو نگه می‌داریم
+          imagePaths: event.imagePaths,
         );
+
+        // ذخیره توکن و پرچم ثبت‌نام کامل
+        await secureStorage.write(key: 'token', value: event.token);
+        await secureStorage.write(key: 'isRegistrationComplete', value: 'true');
 
         emit(RegisterSuccess(registerResponse.message, userDataWithImages));
       } else {

@@ -27,6 +27,7 @@ class CustomAvatar extends StatelessWidget {
       listener: (context, state) {
         if (state is ImagePickedSuccess) {
           final imageFile = state.image;
+          // ignore: unnecessary_null_comparison
           if (onImageChanged != null && imageFile != null) {
             debugPrint('Image picked, calling onImageChanged: ${imageFile.path}');
             onImageChanged!(imageFile.path);

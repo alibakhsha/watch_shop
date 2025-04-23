@@ -110,6 +110,7 @@ class _CustomShellScreenState extends State<CustomShellScreen> {
         children: [
           SvgPicture.asset(
             icon,
+            // ignore: deprecated_member_use
             color: isSelected ? Colors.black : AppColor.bottomNavIcon2Color,
             width: 30.w,
             height: 30.h,
@@ -127,22 +128,3 @@ class _CustomShellScreenState extends State<CustomShellScreen> {
     );
   }
 }
-
-// _buildNavItem(index: 0, icon: Assets.svg.homeHashtag, label: 'خانه'),
-// _buildNavItem(index: 1, icon: Assets.svg.cart, label: 'سبدخرید'),
-// _buildNavItem(index: 2, icon: Assets.svg.user, label: 'پروفایل'),
-
-// bottomNavigationBar: BottomAppBar(
-// color: Colors.white,
-// elevation: 4,
-// height: 83.h,
-// child: Row(
-// mainAxisAlignment: MainAxisAlignment.spaceAround,
-// crossAxisAlignment: CrossAxisAlignment.center,
-// children: [
-// _buildNavItem(index: 0, icon: Assets.svg.homeHashtag, label: 'خانه'),
-// _buildNavItem(index: 1, icon: Assets.svg.cart, label: 'سبدخرید'),
-// _buildNavItem(index: 2, icon: Assets.svg.user, label: 'پروفایل'),
-// ],
-// ),
-// ),

@@ -1,4 +1,3 @@
-// lib/core/model/product_details.dart
 class ProductDetails {
   final int id;
   final String title;

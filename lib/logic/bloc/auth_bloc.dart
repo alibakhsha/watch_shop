@@ -52,8 +52,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       if (response.statusCode == 200 || response.statusCode == 201) {
         final checkSmsResponse = CheckSmsCodeResponse.fromJson(response.data);
         final token = checkSmsResponse.data.token;
-        // ذخیره توکن توی secureStorage
-        await secureStorage.write(key: 'token', value: token);
+        debugPrint('Token sent to SmsCodeVerified: $token');
         emit(SmsCodeVerified(
           message: checkSmsResponse.message,
           token: token,

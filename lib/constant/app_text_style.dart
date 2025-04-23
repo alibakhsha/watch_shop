@@ -120,6 +120,16 @@ class AppTextStyle {
     fontSize: 14.w,
     color: Colors.black,
   );
+  static var exitTextStyle1 = TextStyle(
+    fontFamily: "Dana",
+    fontSize: 14.w,
+    color: Colors.black,
+  );
+  static var exitTextStyle2 = TextStyle(
+    fontFamily: "Dana",
+    fontSize: 12.w,
+    color: Colors.black,
+  );
   static var totalPriceTextStyle = TextStyle(
     fontFamily: "Dana",
     fontSize: 16.w,

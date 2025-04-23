@@ -14,7 +14,7 @@ PreferredSize buildCustomSignUpAppBar(VoidCallback onPressed) {
           padding: EdgeInsets.fromLTRB(12.w, 12.h, 0, 12.h),
           child: Center(
             child: GestureDetector(
-              //TODO: add onTab
+
               onTap: onPressed,
               child: SvgPicture.asset(
                 Assets.svg.vuesaxLinearDirectLeft,
@@ -52,7 +52,6 @@ PreferredSize buildProductsAppBar(
           padding: EdgeInsets.fromLTRB(12.w, 12.h, 0, 12.h),
           child: Center(
             child: GestureDetector(
-              //TODO: add onTab
               onTap: onPressed1,
               child: SvgPicture.asset(
                 Assets.svg.cart1,

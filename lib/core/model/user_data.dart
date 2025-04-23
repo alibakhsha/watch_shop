@@ -63,6 +63,7 @@ class UserData {
       'lat': address.lat ?? 0.0,
       'lng': address.lng ?? 0.0,
       'postalCode': address.postalCode.isNotEmpty ? address.postalCode : "",
+      // ignore: prefer_null_aware_operators
       'imagePaths': imagePaths != null ? imagePaths!.join(',') : null,
     };
   }

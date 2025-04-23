@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_html/flutter_html.dart';
@@ -37,7 +36,7 @@ class SingleProductScreen extends StatelessWidget {
               final product = state.productDetails;
               return Scaffold(
                 backgroundColor: AppColor.bgColor,
-                appBar: buildProductsAppBar(() {}, () {
+                appBar: buildProductsAppBar(() => context.go("/cart"), () {
                   context.pop();
                 }, product.title),
 

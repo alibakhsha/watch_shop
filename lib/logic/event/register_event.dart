@@ -8,6 +8,7 @@ class RegisterUserEvent extends RegisterEvent {
   final double lat;
   final double lng;
   final List<String>? imagePaths; // لیست مسیرهای تصاویر
+  final String token;
 
   RegisterUserEvent({
     required this.name,
@@ -17,5 +18,6 @@ class RegisterUserEvent extends RegisterEvent {
     required this.lat,
     required this.lng,
     this.imagePaths, // لیست اختیاری
+    required this.token
   });
 }
