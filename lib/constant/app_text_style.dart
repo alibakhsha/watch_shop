@@ -135,6 +135,11 @@ class AppTextStyle {
     fontSize: 16.w,
     color: Colors.black,
   );
+    static var fingerPrintTextStyle = TextStyle(
+    fontFamily: "Dana",
+    fontSize: 18.w,
+    color: Colors.black,
+  );
   static var textBottomNavStyle2 = TextStyle(
     fontFamily: "Dana",
     fontSize: 12.w,

@@ -35,6 +35,7 @@ class RegisterSignUpScreen extends StatelessWidget {
       create: (context) => RegisterBloc(ApiService()),
       child: PopScope(
         canPop: false, // غیرفعال کردن دکمه‌ی Back پیش‌فرض
+        // ignore: deprecated_member_use
         onPopInvoked: (didPop) async {
           if (didPop) return;
           // نمایش دیالوگ تأیید
@@ -57,6 +58,7 @@ class RegisterSignUpScreen extends StatelessWidget {
           );
           if (shouldExit == true) {
             // هدایت به صفحه‌ی registerIntro یا خروج از اپ
+            // ignore: use_build_context_synchronously
             GoRouter.of(context).go(RouteName.registerIntro);
             // یا برای خروج کامل از اپ:
             // SystemNavigator.pop();

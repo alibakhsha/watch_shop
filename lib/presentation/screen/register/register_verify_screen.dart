@@ -25,6 +25,7 @@ class RegisterVerifyScreen extends StatelessWidget {
       create: (context) => AuthBloc(ApiService()),
       child: PopScope(
         canPop: false,
+        // ignore: deprecated_member_use
         onPopInvoked: (didPop) async {
           if (didPop) return;
           final shouldExit = await showDialog<bool>(
@@ -46,6 +47,7 @@ class RegisterVerifyScreen extends StatelessWidget {
             ),
           );
           if (shouldExit == true) {
+            // ignore: use_build_context_synchronously
             GoRouter.of(context).go(RouteName.registerIntro);
           }
         },

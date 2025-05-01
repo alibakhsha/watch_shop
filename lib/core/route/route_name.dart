@@ -7,5 +7,6 @@ class RouteName {
   static const registerSignUp = "/registerSignUp";
   static const products = "/products";
   static const singleProduct = "/singleProduct";
+  static const login = "/login";
 }
 

@@ -8,6 +8,7 @@ import 'package:watch_shop/presentation/screen/home_screen.dart';
 import 'package:watch_shop/presentation/screen/products/products_screen.dart';
 import 'package:watch_shop/presentation/screen/products/single_product_screen.dart';
 import 'package:watch_shop/presentation/screen/profile_screen.dart';
+import 'package:watch_shop/presentation/screen/register/login_screen.dart';
 import 'package:watch_shop/presentation/screen/register/register_intro_screen.dart';
 import 'package:watch_shop/presentation/screen/register/register_sign_up_screen.dart';
 import 'package:watch_shop/presentation/screen/register/register_verify_screen.dart';
@@ -27,7 +28,7 @@ Future<String> _checkInitialRoute() async {
   final secureStorage = FlutterSecureStorage();
   final token = await secureStorage.read(key: 'token');
   debugPrint('Token on startup: $token');
-  return token != null ? RouteName.home : RouteName.registerIntro;
+  return token != null ? RouteName.login : RouteName.registerIntro;
 }
 
 final GoRouter appRouter = GoRouter(
@@ -130,6 +131,11 @@ final GoRouter appRouter = GoRouter(
           },
         ),
       ],
+    ),
+    GoRoute(
+      path: '/login',
+      name: RouteName.login,
+      builder: (context, state) => const LoginScreen(),
     ),
     GoRoute(
       path: '/registerIntro',

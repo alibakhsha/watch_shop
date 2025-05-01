@@ -1,4 +1,3 @@
-import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -115,16 +114,17 @@ class CustomSingleProductBottomNav extends StatefulWidget {
       _CustomSingleProductBottomNavState();
 }
 
-class _CustomSingleProductBottomNavState extends State<CustomSingleProductBottomNav> {
+class _CustomSingleProductBottomNavState
+    extends State<CustomSingleProductBottomNav> {
   int _localQuantity = 0;
 
   void _addToCart() {
     context.read<CartBloc>().add(
       AddProductToCart(productId: widget.productId, quantity: 1),
     );
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('محصول به سبد خرید اضافه شد')),
-    );
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(const SnackBar(content: Text('محصول به سبد خرید اضافه شد')));
   }
 
   void _increment() {
@@ -147,15 +147,16 @@ class _CustomSingleProductBottomNavState extends State<CustomSingleProductBottom
         if (state is CartLoaded) {
           final foundItem = state.cartItems.firstWhere(
             (item) => item.productId == widget.productId,
-            orElse: () => CartItem(
-              id: 0,
-              productId: widget.productId,
-              productTitle: '',
-              quantity: 0,
-              image: '',
-              price: 0.0,
-              priceDiscount: 0.0,
-            ),
+            orElse:
+                () => CartItem(
+                  id: 0,
+                  productId: widget.productId,
+                  productTitle: '',
+                  quantity: 0,
+                  image: '',
+                  price: 0.0,
+                  priceDiscount: 0.0,
+                ),
           );
           if (_localQuantity != foundItem.quantity) {
             setState(() {
@@ -173,28 +174,28 @@ class _CustomSingleProductBottomNavState extends State<CustomSingleProductBottom
           children: [
             _localQuantity == 0
                 ? CustomButton(
-                    text: "افزودن به سبد خرید",
-                    onPressed: _addToCart,
-                    shape: ButtonShape.rectangle,
-                  )
+                  text: "افزودن به سبد خرید",
+                  onPressed: _addToCart,
+                  shape: ButtonShape.rectangle,
+                )
                 : Row(
-                    children: [
-                      GestureDetector(
-                        onTap: _increment,
-                        child: SvgPicture.asset(Assets.svg.plus),
-                      ),
-                      SizedBox(width: 8.w),
-                      Text(
-                        "$_localQuantity عدد",
-                        style: AppTextStyle.cartCountTextStyle,
-                      ),
-                      SizedBox(width: 8.w),
-                      GestureDetector(
-                        onTap: () => _decrement(_localQuantity),
-                        child: SvgPicture.asset(Assets.svg.minus),
-                      ),
-                    ],
-                  ),
+                  children: [
+                    GestureDetector(
+                      onTap: _increment,
+                      child: SvgPicture.asset(Assets.svg.plus),
+                    ),
+                    SizedBox(width: 8.w),
+                    Text(
+                      "$_localQuantity عدد",
+                      style: AppTextStyle.cartCountTextStyle,
+                    ),
+                    SizedBox(width: 8.w),
+                    GestureDetector(
+                      onTap: () => _decrement(_localQuantity),
+                      child: SvgPicture.asset(Assets.svg.minus),
+                    ),
+                  ],
+                ),
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.end,
@@ -235,5 +236,4 @@ class _CustomSingleProductBottomNavState extends State<CustomSingleProductBottom
       ),
     );
   }
-
 }
