@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -114,16 +115,16 @@ class CustomSingleProductBottomNav extends StatefulWidget {
       _CustomSingleProductBottomNavState();
 }
 
-class _CustomSingleProductBottomNavState
-    extends State<CustomSingleProductBottomNav> {
+class _CustomSingleProductBottomNavState extends State<CustomSingleProductBottomNav> {
+  int _localQuantity = 0;
+
   void _addToCart() {
     context.read<CartBloc>().add(
       AddProductToCart(productId: widget.productId, quantity: 1),
     );
-
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(const SnackBar(content: Text('محصول به سبد خرید اضافه شد')));
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('محصول به سبد خرید اضافه شد')),
+    );
   }
 
   void _increment() {
@@ -140,41 +141,43 @@ class _CustomSingleProductBottomNavState
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<CartBloc, CartState>(
-      builder: (context, state) {
-        // مقدار quantity رو از CartBloc می‌گیریم
-        int quantity = 0;
+    return BlocListener<CartBloc, CartState>(
+      listenWhen: (previous, current) => current is CartLoaded,
+      listener: (context, state) {
         if (state is CartLoaded) {
-          final cartItem = state.cartItems.firstWhere(
+          final foundItem = state.cartItems.firstWhere(
             (item) => item.productId == widget.productId,
-            orElse:
-                () => CartItem(
-                  id: 0, // مقدار پیش‌فرض برای id
-                  productId: widget.productId,
-                  productTitle: '', // مقدار پیش‌فرض برای productTitle
-                  quantity: 0,
-                  image: '', // مقدار پیش‌فرض برای image
-                  price: 0.0, // مقدار پیش‌فرض برای price
-                  priceDiscount: 0.0, // مقدار پیش‌فرض برای priceDiscount
-                ),
+            orElse: () => CartItem(
+              id: 0,
+              productId: widget.productId,
+              productTitle: '',
+              quantity: 0,
+              image: '',
+              price: 0.0,
+              priceDiscount: 0.0,
+            ),
           );
-          quantity = cartItem.quantity;
+          if (_localQuantity != foundItem.quantity) {
+            setState(() {
+              _localQuantity = foundItem.quantity;
+            });
+          }
         }
-
-        return BottomAppBar(
-          elevation: 1,
-          color: Colors.white,
-          height: 80.h,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              quantity == 0
-                  ? CustomButton(
+      },
+      child: BottomAppBar(
+        elevation: 1,
+        color: Colors.white,
+        height: 80.h,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            _localQuantity == 0
+                ? CustomButton(
                     text: "افزودن به سبد خرید",
                     onPressed: _addToCart,
                     shape: ButtonShape.rectangle,
                   )
-                  : Row(
+                : Row(
                     children: [
                       GestureDetector(
                         onTap: _increment,
@@ -182,55 +185,55 @@ class _CustomSingleProductBottomNavState
                       ),
                       SizedBox(width: 8.w),
                       Text(
-                        "$quantity عدد",
+                        "$_localQuantity عدد",
                         style: AppTextStyle.cartCountTextStyle,
                       ),
                       SizedBox(width: 8.w),
                       GestureDetector(
-                        onTap: () => _decrement(quantity),
+                        onTap: () => _decrement(_localQuantity),
                         child: SvgPicture.asset(Assets.svg.minus),
                       ),
                     ],
                   ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Row(
-                    children: [
-                      if (widget.discount != 0)
-                        Container(
-                          width: 34.w,
-                          height: 18.h,
-                          decoration: BoxDecoration(
-                            color: Colors.red,
-                            borderRadius: BorderRadius.all(Radius.circular(50)),
-                          ),
-                          child: Center(
-                            child: Text(
-                              "%${widget.discount}",
-                              style: AppTextStyle.productDiscountStyle,
-                            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Row(
+                  children: [
+                    if (widget.discount != 0)
+                      Container(
+                        width: 34.w,
+                        height: 18.h,
+                        decoration: BoxDecoration(
+                          color: Colors.red,
+                          borderRadius: BorderRadius.circular(50),
+                        ),
+                        child: Center(
+                          child: Text(
+                            "%${widget.discount}",
+                            style: AppTextStyle.productDiscountStyle,
                           ),
                         ),
-                      SizedBox(width: 6.w),
-                      Text(
-                        widget.discountPrice.toString(),
-                        style: AppTextStyle.productPriceStyle,
                       ),
-                    ],
-                  ),
-                  if (widget.discountPrice != widget.price)
+                    SizedBox(width: 6.w),
                     Text(
-                      widget.price.toString(),
-                      style: AppTextStyle.productDiscountPriceStyle,
+                      widget.discountPrice.toString(),
+                      style: AppTextStyle.productPriceStyle,
                     ),
-                ],
-              ),
-            ],
-          ),
-        );
-      },
+                  ],
+                ),
+                if (widget.discountPrice != widget.price)
+                  Text(
+                    widget.price.toString(),
+                    style: AppTextStyle.productDiscountPriceStyle,
+                  ),
+              ],
+            ),
+          ],
+        ),
+      ),
     );
   }
+
 }

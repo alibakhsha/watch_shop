@@ -64,18 +64,20 @@ class SingleProductScreen extends StatelessWidget {
       ),
     );
   }
-  Widget _buildProductImageSection(ProductDetails product){
+
+  Widget _buildProductImageSection(ProductDetails product) {
     return Container(
       height: 200.h,
       decoration: BoxDecoration(
-        image: DecorationImage(
-          image: NetworkImage(product.image),
-        ),
+        image: DecorationImage(image: NetworkImage(product.image)),
       ),
     );
   }
-  
-  Widget _buildBodySection(ProductDetails product,ValueNotifier<int> selectedTab ){
+
+  Widget _buildBodySection(
+    ProductDetails product,
+    ValueNotifier<int> selectedTab,
+  ) {
     return Container(
       height: 440.h,
       decoration: BoxDecoration(
@@ -91,8 +93,7 @@ class SingleProductScreen extends StatelessWidget {
                 children: [
                   Text(
                     product.titleEn,
-                    style:
-                    AppTextStyle.singleProductTextStyle1,
+                    style: AppTextStyle.singleProductTextStyle1,
                   ),
                 ],
               ),
@@ -101,19 +102,15 @@ class SingleProductScreen extends StatelessWidget {
                 children: [
                   Text(
                     product.title,
-                    style:
-                    AppTextStyle.singleProductTextStyle2,
+                    style: AppTextStyle.singleProductTextStyle2,
                   ),
                 ],
               ),
               SizedBox(height: 8.h),
-              Divider(
-                color: Color.fromRGBO(248, 248, 248, 1),
-              ),
+              Divider(color: Color.fromRGBO(248, 248, 248, 1)),
               SizedBox(height: 8.h),
               Row(
-                mainAxisAlignment:
-                MainAxisAlignment.spaceAround,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   InkWell(
                     onTap: () {
@@ -125,11 +122,9 @@ class SingleProductScreen extends StatelessWidget {
                         return Text(
                           "خصوصیات",
                           style:
-                          value == 0
-                              ? AppTextStyle
-                              .singleProductTextStyle1
-                              : AppTextStyle
-                              .singleProductTextStyle2,
+                              value == 0
+                                  ? AppTextStyle.singleProductTextStyle1
+                                  : AppTextStyle.singleProductTextStyle2,
                         );
                       },
                     ),
@@ -144,11 +139,9 @@ class SingleProductScreen extends StatelessWidget {
                         return Text(
                           "نقد و بررسی",
                           style:
-                          value == 1
-                              ? AppTextStyle
-                              .singleProductTextStyle1
-                              : AppTextStyle
-                              .singleProductTextStyle2,
+                              value == 1
+                                  ? AppTextStyle.singleProductTextStyle1
+                                  : AppTextStyle.singleProductTextStyle2,
                         );
                       },
                     ),
@@ -163,11 +156,9 @@ class SingleProductScreen extends StatelessWidget {
                         return Text(
                           "نظرات",
                           style:
-                          value == 2
-                              ? AppTextStyle
-                              .singleProductTextStyle1
-                              : AppTextStyle
-                              .singleProductTextStyle2,
+                              value == 2
+                                  ? AppTextStyle.singleProductTextStyle1
+                                  : AppTextStyle.singleProductTextStyle2,
                         );
                       },
                     ),
@@ -184,8 +175,7 @@ class SingleProductScreen extends StatelessWidget {
                         data: product.description,
                         style: {
                           '*': Style.fromTextStyle(
-                            AppTextStyle
-                                .singleProductTextStyle2,
+                            AppTextStyle.singleProductTextStyle2,
                           ),
                         },
                       );
@@ -194,8 +184,7 @@ class SingleProductScreen extends StatelessWidget {
                         data: product.discussion,
                         style: {
                           '*': Style.fromTextStyle(
-                            AppTextStyle
-                                .singleProductTextStyle2,
+                            AppTextStyle.singleProductTextStyle2,
                           ),
                         },
                       );
@@ -204,45 +193,33 @@ class SingleProductScreen extends StatelessWidget {
                         children: [
                           product.comments.isEmpty
                               ? Text(
-                            'نظری وجود ندارد',
-                            style: AppTextStyle.singleProductTextStyle2,
-                          )
+                                'نظری وجود ندارد',
+                                style: AppTextStyle.singleProductTextStyle2,
+                              )
                               : ListView.separated(
-                            shrinkWrap: true,
-                            physics:
-                            const NeverScrollableScrollPhysics(),
-                            itemCount:
-                            product.comments.length,
-                            itemBuilder: (
-                                context,
-                                index,
-                                ) {
-                              final comment = product.comments[index];
-                              return ListTile(
-                                title: Text(comment.user,
-                                  style:
-                                  AppTextStyle
-                                      .singleProductTextStyle1,
-                                ),
-                                subtitle: Text(
-                                  comment.body,
-                                  style:
-                                  AppTextStyle
-                                      .singleProductTextStyle2,
-                                ),
-                              );
-                            },
-                            separatorBuilder:
-                                (context, index) =>
-                                Divider(
-                                  color: Color.fromRGBO(
-                                    84,
-                                    84,
-                                    84,
-                                    1,
-                                  ),
-                                ),
-                          ),
+                                shrinkWrap: true,
+                                physics: const NeverScrollableScrollPhysics(),
+                                itemCount: product.comments.length,
+                                itemBuilder: (context, index) {
+                                  final comment = product.comments[index];
+                                  return ListTile(
+                                    title: Text(
+                                      comment.user,
+                                      style:
+                                          AppTextStyle.singleProductTextStyle1,
+                                    ),
+                                    subtitle: Text(
+                                      comment.body,
+                                      style:
+                                          AppTextStyle.singleProductTextStyle2,
+                                    ),
+                                  );
+                                },
+                                separatorBuilder:
+                                    (context, index) => Divider(
+                                      color: Color.fromRGBO(84, 84, 84, 1),
+                                    ),
+                              ),
                         ],
                       );
                     default:
