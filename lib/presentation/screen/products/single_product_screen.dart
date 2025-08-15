@@ -45,7 +45,7 @@ class SingleProductScreen extends StatelessWidget {
                   child: Column(
                     children: [
                       _buildProductImageSection(product),
-                      SizedBox(height: 12.h),
+                      SizedBox(height: 8.h),
                       _buildBodySection(product, selectedTab),
                     ],
                   ),
@@ -79,7 +79,7 @@ class SingleProductScreen extends StatelessWidget {
     ValueNotifier<int> selectedTab,
   ) {
     return Container(
-      height: 440.h,
+      height: 410.h,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.all(Radius.circular(12)),
@@ -165,7 +165,7 @@ class SingleProductScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(height: 24.h),
+              SizedBox(height: 16.h),
               ValueListenableBuilder<int>(
                 valueListenable: selectedTab,
                 builder: (context, value, child) {

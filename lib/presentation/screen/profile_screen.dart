@@ -158,7 +158,7 @@ class ProfileScreen extends StatelessWidget {
   }
   Widget _buildPurchaseStatusSection(){
     return Container(
-      height: 164.h,
+      height: 150.h,
       decoration: BoxDecoration(
         color: AppColor.profileBoxColor,
         borderRadius: BorderRadius.all(Radius.circular(12)),

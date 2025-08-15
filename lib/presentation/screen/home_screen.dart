@@ -83,7 +83,8 @@ class HomeScreen extends StatelessWidget {
       child: TextField(
         controller: searchController,
         onSubmitted: (value) {
-          performSearch(context); // فراخوانی تابع جستجو هنگام زدن Done
+          performSearch(context);// فراخوانی تابع جستجو هنگام زدن Done
+          searchController.clear();
         },
         decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(10, 20, 10, 20),
@@ -95,7 +96,8 @@ class HomeScreen extends StatelessWidget {
           suffixIcon: IconButton(
             icon: Icon(Icons.search, size: 24),
             onPressed: () {
-              performSearch(context); // فراخوانی تابع جستجو هنگام کلیک روی آیکون
+              performSearch(context);// فراخوانی تابع جستجو هنگام کلیک روی آیکون
+              searchController.clear();
             },
           ),
           border: OutlineInputBorder(
